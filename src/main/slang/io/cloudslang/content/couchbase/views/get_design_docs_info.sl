@@ -93,7 +93,7 @@
 #!!#
 ########################################################################################################################
 
-namespace: io.io.cloudslang.couchbase.views
+namespace: io.cloudslang.content.couchbase.views
 
 operation: 
   name: get_design_docs_info
@@ -201,8 +201,8 @@ operation:
         private: true 
     
   java_action: 
-    gav: 'io.io.cloudslang.content:cs-couchbase:0.1.0'
-    class_name: 'io.io.cloudslang.content.couchbase.actions.views.GetDesignDocsInfo'
+    gav: 'io.cloudslang.content:cs-couchbase:0.1.0'
+    class_name: 'io.cloudslang.content.couchbase.actions.views.GetDesignDocsInfo'
     method_name: 'execute'
   
   outputs: 

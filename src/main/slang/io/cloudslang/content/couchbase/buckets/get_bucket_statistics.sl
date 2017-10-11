@@ -94,7 +94,7 @@
 #!!#
 ########################################################################################################################
 
-namespace: io.io.cloudslang.couchbase.buckets
+namespace: io.cloudslang.content.couchbase.buckets
 
 operation: 
   name: get_bucket_statistics
@@ -198,8 +198,8 @@ operation:
         private: true 
     
   java_action: 
-    gav: 'io.io.cloudslang.content:cs-couchbase:0.1.0'
-    class_name: 'io.io.cloudslang.content.couchbase.actions.buckets.GetBucketStatistics'
+    gav: 'io.cloudslang.content:cs-couchbase:0.1.0'
+    class_name: 'io.cloudslang.content.couchbase.actions.buckets.GetBucketStatistics'
     method_name: 'execute'
   
   outputs: 

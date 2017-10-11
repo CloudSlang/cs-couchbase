@@ -101,7 +101,7 @@
 #!!#
 ########################################################################################################################
 
-namespace: io.io.cloudslang.couchbase.buckets
+namespace: io.cloudslang.content.couchbase.buckets
 
 operation: 
   name: delete_bucket
@@ -205,8 +205,8 @@ operation:
         private: true 
     
   java_action: 
-    gav: 'io.io.cloudslang.content:cs-couchbase:0.1.0'
-    class_name: 'io.io.cloudslang.content.couchbase.actions.buckets.DeleteBucket'
+    gav: 'io.cloudslang.content:cs-couchbase:0.1.0'
+    class_name: 'io.cloudslang.content.couchbase.actions.buckets.DeleteBucket'
     method_name: 'execute'
   
   outputs: 

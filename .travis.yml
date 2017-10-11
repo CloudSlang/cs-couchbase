@@ -1,0 +1,33 @@
+language: java
+
+env:
+  - JAVA_OPTS='-Xmx2048m -Xms512m' M2_HOME=${HOME}/apache-maven-3.5.0 PATH=${M2_HOME}/bin:${PATH}
+
+jdk:
+  - oraclejdk8
+  - openjdk7
+
+before_script:
+  - "echo $JAVA_OPTS"
+
+cache:
+  directories:
+    - "$HOME/.m2/repository"
+    - "$HOME/apache-maven-3.5.0"
+
+before_install:
+  - if [ ! -d "${M2_HOME}"/bin ]; then curl https://archive.apache.org/dist/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz | tar zxf - -C "${HOME}"; fi
+
+
+install:
+  - mvn clean install -T 2.0C -DrepoToken=${repoToken} -Dmaven.javadoc.skip=true
+
+script:
+  - wget https://github.com/CloudSlang/cloud-slang/releases/download/cloudslang-1.0.9/cslang-builder.zip
+  - unzip -q cslang-builder.zip
+  - chmod +x cslang-builder/bin/cslang-builder
+  - ./cslang-builder/bin/cslang-builder -cr /src/main/slang -pr /src -ts /src/test/slang -ts \!default,couchbase -cov -des -cs
+
+# cat prints only part of the file for some reason so we print ourselves
+after_failure: while read line; do printf "%s\n" "$line"; done < ./cslang-builder/logs/builder.log
+

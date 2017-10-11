@@ -101,7 +101,7 @@
 #!!#
 ########################################################################################################################
 
-namespace: io.io.cloudslang.couchbase.nodes
+namespace: io.cloudslang.content.couchbase.nodes
 
 operation: 
   name: set_recovery_type
@@ -217,8 +217,8 @@ operation:
         private: true 
     
   java_action: 
-    gav: 'io.io.cloudslang.content:cs-couchbase:0.1.0'
-    class_name: 'io.io.cloudslang.content.couchbase.actions.nodes.SetRecoveryType'
+    gav: 'io.cloudslang.content:cs-couchbase:0.1.0'
+    class_name: 'io.cloudslang.content.couchbase.actions.nodes.SetRecoveryType'
     method_name: 'execute'
   
   outputs: 

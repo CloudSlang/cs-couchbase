@@ -103,7 +103,7 @@
 #!!#
 ########################################################################################################################
 
-namespace: io.io.cloudslang.couchbase.cluster
+namespace: io.cloudslang.content.couchbase.cluster
 
 operation: 
   name: rebalancing_nodes
@@ -221,8 +221,8 @@ operation:
         required: false  
     
   java_action: 
-    gav: 'io.io.cloudslang.content:cs-couchbase:0.1.0'
-    class_name: 'io.io.cloudslang.content.couchbase.actions.cluster.RebalancingNodes'
+    gav: 'io.cloudslang.content:cs-couchbase:0.1.0'
+    class_name: 'io.cloudslang.content.couchbase.actions.cluster.RebalancingNodes'
     method_name: 'execute'
   
   outputs: 

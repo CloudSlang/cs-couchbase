@@ -153,7 +153,7 @@
 #!!#
 ########################################################################################################################
 
-namespace: io.io.cloudslang.couchbase.buckets
+namespace: io.cloudslang.content.couchbase.buckets
 
 operation: 
   name: create_or_edit_bucket
@@ -347,8 +347,8 @@ operation:
         private: true 
     
   java_action: 
-    gav: 'io.io.cloudslang.content:cs-couchbase:0.1.0'
-    class_name: 'io.io.cloudslang.content.couchbase.actions.buckets.CreateOrEditBucket'
+    gav: 'io.cloudslang.content:cs-couchbase:0.1.0'
+    class_name: 'io.cloudslang.content.couchbase.actions.buckets.CreateOrEditBucket'
     method_name: 'execute'
   
   outputs: 
