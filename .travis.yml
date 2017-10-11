@@ -25,6 +25,7 @@ install:
 script:
   - wget https://github.com/CloudSlang/cloud-slang/releases/download/cloudslang-1.0.9/cslang-builder.zip
   - unzip -q cslang-builder.zip
+  - ls al
   - chmod +x cslang-builder/bin/cslang-builder
   - ./cslang-builder/bin/cslang-builder -cr /src/main/slang -pr /src -ts /src/test/slang -ts \!default,couchbase -cov -des -cs
 
