@@ -71,8 +71,8 @@ The following is an overview of what is included in the ready-made content:
         + **rebalancing_nodes** Start rebalancing process on all cluster nodes.
     + **nodes**
         + **fail_over_node** Failover is the process in which a node of a Couchbase cluster is removed quickly as opposed to a regular removal and rebalancing.
-        + **graceful_fail_over_node**
-        + **set_recovery_type**
+        + **graceful_fail_over_node** Graceful failover for a specific server node.
+        + **set_recovery_type** Sets the recovery type to be performed for a node.
     + **views**
         + **get_design_dock_info** Retrieve design documents for a specified Couchbase bucket.
 
