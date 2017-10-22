@@ -25,4 +25,28 @@ This repository contains ready-made CloudSlang @Actions, flows, operations and t
 </dependency>
 ```
 
-For more information about the integration, content structure, contribution guide and usage, visit our wiki page [here](https://github.com/CloudSlang/cs-couchbase/wiki). 
+### Usage
+
+Pre-requisites: JAVA JRE >=7
+
+1. Download the CloudSlang CLI file named cslang-cli.zip/tar.gz:
+    + [Stable release](https://github.com/CloudSlang/cloud-slang/releases/latest)
+    + [Latest snapshot](https://github.com/CloudSlang/cloud-slang/releases/)
+2. Extract it.
+3. Go to the folder `cslang/bin/`
+4. Run the executable :
+  - For Windows: `cslang.bat`
+  - For Linux: `bash cslang`
+5. Run a simple `Get design docs info` operation:
+
+`run --f ../slang/io/cloudslang/content/couchbase/views/get_design_docs_info.sl --i 
+ endpoint=couchbase_IP,username=couchbase_USERNAME,password=couchbase_PASSWORD,bucket_name=couchbase_BUCKET_NAME`
+
+Command line arguments in the above example:
+
+| Argument | Description |
+| ----- | ----- |
+| --f | Location of the flow to run. |
+| --i | Arguments the flow takes as input, for multiple arguments use a comma delimited list (e.g. `var1=value1,var2=value2`). |
+
+For more information about the integration, content structure, contribution guide visit our wiki page [here](https://github.com/CloudSlang/cs-couchbase/wiki). 
