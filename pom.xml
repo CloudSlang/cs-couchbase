@@ -69,6 +69,11 @@
         <tag>master</tag>
     </scm>
 
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/CloudSlang/cs-couchbase/issues</url>
+    </issueManagement>
+
     <distributionManagement>
         <repository>
             <id>ossrh</id>
@@ -192,6 +197,28 @@
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>${maven-javadoc-plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>com.github.danielflower.mavenplugins</groupId>
+                    <artifactId>gitlog-maven-plugin</artifactId>
+                    <version>1.13.3</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <outputDirectory>${project.basedir}</outputDirectory>
+                        <fullGitMessage>false</fullGitMessage>
+                        <issueManagementUrl>https://github.com/CloudSlang/cs-couchbase/issues</issueManagementUrl>
+                        <generatePlainTextChangeLog>false</generatePlainTextChangeLog>
+                        <generateSimpleHTMLChangeLog>false</generateSimpleHTMLChangeLog>
+                        <generateJSONChangeLog>false</generateJSONChangeLog>
+                        <generateMarkdownChangeLog>true</generateMarkdownChangeLog>
+                        <markdownChangeLogFilename>CHANGELOG.md</markdownChangeLogFilename>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -267,13 +294,14 @@
     </build>
 
     <profiles>
-        <profile>
+         <profile>
             <id>release-external-profile</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-release-plugin</artifactId>
+                        <version>${maven-release-plugin.version}</version>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -293,6 +321,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven-gpg-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
