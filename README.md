@@ -8,7 +8,7 @@
 
 
 
-**cs-couchbase** repository contains ready-made CloudSlang @Actions, flows, operations and tests for the Couchbase integration.
+This repository contains ready-made CloudSlang @Actions, flows, operations and tests for the Couchbase integration.
 
 | Travis CI (Linux/Maven 3.5.0)| Maven Central |
 | -----| -----|
