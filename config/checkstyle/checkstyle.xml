@@ -167,7 +167,6 @@
             <property name="exceptionVariableName" value="expected|ignore"/>
         </module>
         <module name="CommentsIndentation"/>
-        <module name="FileContentsHolder"/>
         <module name="EqualsAvoidNull"/>
     </module>
 </module>
