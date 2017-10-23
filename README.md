@@ -10,9 +10,9 @@
 
 This repository contains ready-made CloudSlang @Actions, flows, operations and tests for the Couchbase integration.
 
-| Travis CI (Linux/Maven 3.5.0)| Maven Central |
-| -----| -----|
-| [![Build Status](https://travis-ci.org/CloudSlang/cs-couchbase.svg?branch=master)](https://travis-ci.org/CloudSlang/cs-couchbase) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.cloudslang.content/cs-couchbase/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.cloudslang.content/cs-couchbase) |
+| Travis CI (Linux/Maven 3.5.0)| Maven Central | Coverage |
+| ----- | ----- | ----- |
+| [![Build Status](https://travis-ci.org/CloudSlang/cs-couchbase.svg?branch=master)](https://travis-ci.org/CloudSlang/cs-couchbase) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.cloudslang.content/cs-couchbase/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.cloudslang.content/cs-couchbase) | [![Coverage Status](https://coveralls.io/repos/github/CloudSlang/cs-couchbase/badge.svg?branch=master)](https://coveralls.io/github/CloudSlang/cs-couchbase?branch=master) |
 
 
 ### Dependency Information
