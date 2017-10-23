@@ -1,6 +1,5 @@
 env:
   - global:
-      - CC_TEST_REPORTER_ID=${codeClimateToken}
       - JAVA_OPTS='-Xmx2048m -Xms512m' M2_HOME=${HOME}/apache-maven-3.5.0 PATH=${M2_HOME}/bin:${PATH}
 
 language: java
@@ -11,8 +10,6 @@ jdk:
 
 before_script:
   - "echo $JAVA_OPTS"
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
 
 cache:
   directories:
@@ -32,8 +29,8 @@ script:
   - chmod +x cslang-builder/bin/cslang-builder
   - ./cslang-builder/bin/cslang-builder -cr src/main/slang -pr src -ts src/test/slang -ts \!default,couchbase -cov -des -cs
 
-after_script:
-  - ./cc-test-reporter after-build --coverage-input-type cobertura -r ${codeClimateToken} --exit-code $TRAVIS_TEST_RESULT
+addons:
+    code_climate: ${codeClimateToken}
 
 # cat prints only part of the file for some reason so we print ourselves
 after_failure: while read line; do printf "%s\n" "$line"; done < ./cslang-builder/logs/builder.log
