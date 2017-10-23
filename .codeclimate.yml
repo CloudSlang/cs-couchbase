@@ -7,6 +7,7 @@ engines:
     enabled: true
   checkstyle:
     enabled: true
+    config: 'config/checkstyle/cobertura.xml
 
 ratings:
   paths:
@@ -14,6 +15,6 @@ ratings:
     - "**.md"
 
 exclude_paths:
-- "test/**"
+- "test/"
 - "**slang/**"
 - "**/vendor/**"
