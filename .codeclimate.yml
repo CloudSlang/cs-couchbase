@@ -1,10 +1,6 @@
 engines:
   fixme:
     enabled: true
-  git-legal:
-    enabled: true
-  markdownlint:
-    enabled: true
   checkstyle:
     enabled: true
     config: 'config/checkstyle/checkstyle.xml'
@@ -12,7 +8,6 @@ engines:
 ratings:
   paths:
     - "**.java"
-    - "**.md"
 
 exclude_paths:
   - "**/test/**/*"

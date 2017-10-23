@@ -7,7 +7,6 @@
 </a>
 
 
-
 This repository contains ready-made CloudSlang @Actions, flows, operations and tests for the Couchbase integration.
 
 | Travis CI (Linux/Maven 3.5.0)| Maven Central | Test Coverage |
@@ -35,8 +34,8 @@ Pre-requisites: JAVA JRE >=7
 2. Extract it.
 3. Go to the folder `cslang/bin/`
 4. Run the executable :
-  - For Windows: `cslang.bat`
-  - For Linux: `bash cslang`
+    + For Linux: `bash cslang`
+    + For Windows: `cslang.bat`
 5. Run a simple `Get design docs info` operation:
 
 `run --f ../slang/io/cloudslang/content/couchbase/views/get_design_docs_info.sl --i 
