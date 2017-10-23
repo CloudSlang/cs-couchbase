@@ -4,7 +4,7 @@
 <coverage line-rate="0.6671619613670133" branch-rate="0.7468354430379747" lines-covered="449" lines-valid="673" branches-covered="177" branches-valid="237" complexity="1.9751552795031055" version="2.1.1" timestamp="1508789299516">
     <sources>
         <source>--source</source>
-        <source>/cs-couchbase/src/main/java</source>
+        <source>/home/travis/build/CloudSlang/cs-couchbase/src/main/java</source>
     </sources>
     <packages>
         <package name="io.cloudslang.content.couchbase.actions.buckets" line-rate="0.0" branch-rate="1.0" complexity="3.0">
