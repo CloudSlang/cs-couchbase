@@ -34,10 +34,7 @@ script:
   - ./cslang-builder/bin/cslang-builder -cr src/main/slang -pr src -ts src/test/slang -ts \!default,couchbase -cov -des -cs
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build --coverage-input-type cobertura --exit-code $TRAVIS_TEST_RESULT
 
 # cat prints only part of the file for some reason so we print ourselves
 after_failure: while read line; do printf "%s\n" "$line"; done < ./cslang-builder/logs/builder.log
-
-after_success:
-  - mvn clean -T 2.0C cobertura:cobertura org.eluder.coveralls:coveralls-maven-plugin:report
