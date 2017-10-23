@@ -12,6 +12,7 @@ This repository contains ready-made CloudSlang @Actions, flows, operations and t
 
 | Travis CI (Linux/Maven 3.5.0)| Maven Central | Coverage |
 | ----- | ----- | ----- |
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/020187edd3d448bf87695b1424a60f52)](https://www.codacy.com/app/tethryus/cs-couchbase?utm_source=github.com&utm_medium=referral&utm_content=CloudSlang/cs-couchbase&utm_campaign=badger)
 | [![Build Status](https://travis-ci.org/CloudSlang/cs-couchbase.svg?branch=master)](https://travis-ci.org/CloudSlang/cs-couchbase) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.cloudslang.content/cs-couchbase/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.cloudslang.content/cs-couchbase) | [![Coverage Status](https://coveralls.io/repos/github/CloudSlang/cs-couchbase/badge.svg?branch=master)](https://coveralls.io/github/CloudSlang/cs-couchbase?branch=master) |
 
 
