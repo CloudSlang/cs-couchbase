@@ -7,6 +7,7 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  */
+
 package io.cloudslang.content.couchbase.actions.cluster;
 
 import com.hp.oo.sdk.content.annotations.Action;

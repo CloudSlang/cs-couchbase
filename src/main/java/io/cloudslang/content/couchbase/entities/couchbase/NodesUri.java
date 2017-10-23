@@ -7,6 +7,7 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  */
+
 package io.cloudslang.content.couchbase.entities.couchbase;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;

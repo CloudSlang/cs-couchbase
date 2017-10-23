@@ -15,6 +15,6 @@ ratings:
     - "**.md"
 
 exclude_paths:
-- "test/"
-- "**slang/**"
-- "**/vendor/**"
+  - **/test/**/*
+  - **/slang/**
+  - **/vendor/**

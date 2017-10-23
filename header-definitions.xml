@@ -4,6 +4,7 @@
         <firstLine>/*</firstLine>
         <beforeEachLine> </beforeEachLine>
         <endLine> */</endLine>
+        <emptyLineAfterHeader>true</emptyLineAfterHeader>
         <afterEachLine> </afterEachLine>
         <firstLineDetectionPattern>/*</firstLineDetectionPattern>
         <lastLineDetectionPattern> */</lastLineDetectionPattern>

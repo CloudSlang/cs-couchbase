@@ -7,6 +7,7 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  */
+
 package io.cloudslang.content.couchbase.entities.couchbase;
 
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getEnumValidValuesString;
