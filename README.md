@@ -7,12 +7,11 @@
 </a>
 
 
-
 This repository contains ready-made CloudSlang @Actions, flows, operations and tests for the Couchbase integration.
 
-| Travis CI (Linux/Maven 3.5.0)| Maven Central | Coverage |
-| ----- | ----- | ----- |
-| [![Build Status](https://travis-ci.org/CloudSlang/cs-couchbase.svg?branch=master)](https://travis-ci.org/CloudSlang/cs-couchbase) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.cloudslang.content/cs-couchbase/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.cloudslang.content/cs-couchbase) | [![Coverage Status](https://coveralls.io/repos/github/CloudSlang/cs-couchbase/badge.svg?branch=master)](https://coveralls.io/github/CloudSlang/cs-couchbase?branch=master) |
+| Travis CI (Linux/Maven 3.5.0)| Maven Central | Codacy | Test coverage |
+| ----- | ----- | ----- | ----- |
+| [![Build Status](https://travis-ci.org/CloudSlang/cs-couchbase.svg?branch=master)](https://travis-ci.org/CloudSlang/cs-couchbase) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.cloudslang.content/cs-couchbase/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.cloudslang.content/cs-couchbase) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/020187edd3d448bf87695b1424a60f52)](https://www.codacy.com/app/tethryus/cs-couchbase?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CloudSlang/cs-couchbase&amp;utm_campaign=Badge_Grade) | [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/020187edd3d448bf87695b1424a60f52)](https://www.codacy.com/app/tethryus/cs-couchbase?utm_source=github.com&utm_medium=referral&utm_content=CloudSlang/cs-couchbase&utm_campaign=Badge_Coverage) |
 
 
 ### Dependency Information
@@ -35,8 +34,8 @@ Pre-requisites: JAVA JRE >=7
 2. Extract it.
 3. Go to the folder `cslang/bin/`
 4. Run the executable :
-  - For Windows: `cslang.bat`
-  - For Linux: `bash cslang`
+    + For Linux: `bash cslang`
+    + For Windows: `cslang.bat`
 5. Run a simple `Get design docs info` operation:
 
 `run --f ../slang/io/cloudslang/content/couchbase/views/get_design_docs_info.sl --i 
