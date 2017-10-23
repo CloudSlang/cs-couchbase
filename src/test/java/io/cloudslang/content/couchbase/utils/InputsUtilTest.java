@@ -75,16 +75,16 @@ public class InputsUtilTest {
 
     @Test
     public void testGetValidIntValueExceedMaxValue() {
-        setExpectedExceptions(RuntimeException.class, exception, "The provided value: 65536 is not within valid range. " +
-                "See operation inputs description section for details.");
+        setExpectedExceptions(RuntimeException.class, exception, "The provided value: 65536 is not within valid range. "
+                + "See operation inputs description section for details.");
 
         getValidIntValue("65536", 0, 65535, 80);
     }
 
     @Test
     public void testGetValidIntValueBellowMinValue() {
-        setExpectedExceptions(RuntimeException.class, exception, "The provided value: -1 is not within valid range. " +
-                "See operation inputs description section for details.");
+        setExpectedExceptions(RuntimeException.class, exception, "The provided value: -1 is not within valid range. "
+                + "See operation inputs description section for details.");
 
         getValidIntValue("-1", 0, 65535, 80);
     }
@@ -115,8 +115,8 @@ public class InputsUtilTest {
 
     @Test
     public void testGetValidPortWrongValue() {
-        setExpectedExceptions(IllegalArgumentException.class, exception, "Incorrect provided value: not integer input. " +
-                "The value doesn't meet conditions for general purpose usage. See operation inputs description section for details.");
+        setExpectedExceptions(IllegalArgumentException.class, exception, "Incorrect provided value: not integer input. "
+                + "The value doesn't meet conditions for general purpose usage. See operation inputs description section for details.");
 
         getValidPort("not integer");
     }
@@ -135,8 +135,8 @@ public class InputsUtilTest {
 
     @Test
     public void testGetIntegerBellowAllowedMinimum() {
-        setExpectedExceptions(RuntimeException.class, exception, "The provided value: -10 is bellow minimum allowed. " +
-                "See operation inputs description section for details.");
+        setExpectedExceptions(RuntimeException.class, exception, "The provided value: -10 is bellow minimum allowed. "
+                + "See operation inputs description section for details.");
 
         getValidIntValue("-10", 0, null, 3);
     }
