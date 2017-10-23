@@ -30,7 +30,9 @@ script:
   - ./cslang-builder/bin/cslang-builder -cr src/main/slang -pr src -ts src/test/slang -ts \!default,couchbase -cov -des -cs
 
 addons:
-    code_climate: ${codeClimateToken}
+  - code_climate:
+    - repo_token: ${codeClimateToken}
+
 
 # cat prints only part of the file for some reason so we print ourselves
 after_failure: while read line; do printf "%s\n" "$line"; done < ./cslang-builder/logs/builder.log
