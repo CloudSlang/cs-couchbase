@@ -17,6 +17,8 @@ cache:
     - "$HOME/apache-maven-3.5.0"
 
 before_install:
+  - sudo apt-get install jq
+  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
   - if [ ! -d "${M2_HOME}"/bin ]; then curl https://archive.apache.org/dist/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz | tar zxf - -C "${HOME}"; fi
 
 
@@ -29,9 +31,8 @@ script:
   - chmod +x cslang-builder/bin/cslang-builder
   - ./cslang-builder/bin/cslang-builder -cr src/main/slang -pr src -ts src/test/slang -ts \!default,couchbase -cov -des -cs
 
-addons:
-  - code_climate:
-    - repo_token: ${codeClimateToken}
+after_success:
+  - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter --projectToken ${codacyToken} -l Java -r cobertura.xml
 
 
 # cat prints only part of the file for some reason so we print ourselves

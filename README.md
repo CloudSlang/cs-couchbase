@@ -9,9 +9,9 @@
 
 This repository contains ready-made CloudSlang @Actions, flows, operations and tests for the Couchbase integration.
 
-| Travis CI (Linux/Maven 3.5.0)| Maven Central | Test Coverage |
-| ----- | ----- | ----- |
-| [![Build Status](https://travis-ci.org/CloudSlang/cs-couchbase.svg?branch=master)](https://travis-ci.org/CloudSlang/cs-couchbase) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.cloudslang.content/cs-couchbase/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.cloudslang.content/cs-couchbase) | [![Test Coverage](https://api.codeclimate.com/v1/badges/0aa5148d02dc4fa87c91/test_coverage)](https://codeclimate.com/github/CloudSlang/cs-couchbase/test_coverage) |
+| Travis CI (Linux/Maven 3.5.0)| Maven Central | Codacy | Test coverage |
+| ----- | ----- | ----- | ----- |
+| [![Build Status](https://travis-ci.org/CloudSlang/cs-couchbase.svg?branch=master)](https://travis-ci.org/CloudSlang/cs-couchbase) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.cloudslang.content/cs-couchbase/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.cloudslang.content/cs-couchbase) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/020187edd3d448bf87695b1424a60f52)](https://www.codacy.com/app/tethryus/cs-couchbase?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CloudSlang/cs-couchbase&amp;utm_campaign=Badge_Grade) | [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/020187edd3d448bf87695b1424a60f52)](https://www.codacy.com/app/tethryus/cs-couchbase?utm_source=github.com&utm_medium=referral&utm_content=CloudSlang/cs-couchbase&utm_campaign=Badge_Coverage) |
 
 
 ### Dependency Information
