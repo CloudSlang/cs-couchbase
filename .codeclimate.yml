@@ -3,13 +3,15 @@ engines:
     enabled: true
   git-legal:
     enabled: true
+  markdownlint:
+    enabled: true
   checkstyle:
     enabled: true
-    config: 'config/checkstyle/checkstyle.xml'
 
 ratings:
   paths:
     - "**.java"
+    - "**.md"
 
 exclude_paths:
 - "test/"
