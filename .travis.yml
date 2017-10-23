@@ -32,5 +32,5 @@ script:
 after_failure: while read line; do printf "%s\n" "$line"; done < ./cslang-builder/logs/builder.log
 
 after_success:
-  - mvn clean -T 2.0C cobertura:cobertura org.eluder.coveralls:coveralls-maven-plugin:report ${MVN_EXCLUDE_MODULES}
+  - mvn clean -T 2.0C cobertura:cobertura org.eluder.coveralls:coveralls-maven-plugin:report
 
