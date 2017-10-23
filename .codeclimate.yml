@@ -7,7 +7,7 @@ engines:
     enabled: true
   checkstyle:
     enabled: true
-    config: 'config/checkstyle/cobertura.xml
+    config: 'config/checkstyle/cobertura.xml'
 
 ratings:
   paths:
