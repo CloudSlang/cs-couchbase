@@ -26,12 +26,12 @@
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
         <nexus-staging-maven-plugin>1.6.8</nexus-staging-maven-plugin>
         <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
-        <maven-release-plugin.version>2.5.2</maven-release-plugin.version>
+        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
         <maven-delpoy-plugin.version>2.8.2</maven-delpoy-plugin.version>
         <maven-license-plugin.version>3.0</maven-license-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <cobertura-maven-plugin.version>2.6</cobertura-maven-plugin.version>
+        <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
         <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
         <!--Project dependencies-->
         <score-content-sdk.version>1.10.6</score-content-sdk.version>
@@ -309,7 +309,7 @@
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.3</version>
+                        <version>1.6.8</version>
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>ossrh</serverId>
