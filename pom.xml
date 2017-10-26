@@ -246,28 +246,28 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>com.github.danielflower.mavenplugins</groupId>
-                <artifactId>gitlog-maven-plugin</artifactId>
-                <version>1.13.3</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <outputDirectory>${project.basedir}</outputDirectory>
-                    <fullGitMessage>false</fullGitMessage>
-                    <issueManagementUrl>https://github.com/CloudSlang/cs-couchbase/issues</issueManagementUrl>
-                    <generatePlainTextChangeLog>false</generatePlainTextChangeLog>
-                    <generateSimpleHTMLChangeLog>false</generateSimpleHTMLChangeLog>
-                    <generateJSONChangeLog>false</generateJSONChangeLog>
-                    <generateMarkdownChangeLog>true</generateMarkdownChangeLog>
-                    <markdownChangeLogFilename>CHANGELOG.md</markdownChangeLogFilename>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>com.github.danielflower.mavenplugins</groupId>-->
+                <!--<artifactId>gitlog-maven-plugin</artifactId>-->
+                <!--<version>1.13.3</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<goals>-->
+                            <!--<goal>generate</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<configuration>-->
+                    <!--<outputDirectory>${project.basedir}</outputDirectory>-->
+                    <!--<fullGitMessage>false</fullGitMessage>-->
+                    <!--<issueManagementUrl>https://github.com/CloudSlang/cs-couchbase/issues</issueManagementUrl>-->
+                    <!--<generatePlainTextChangeLog>false</generatePlainTextChangeLog>-->
+                    <!--<generateSimpleHTMLChangeLog>false</generateSimpleHTMLChangeLog>-->
+                    <!--<generateJSONChangeLog>false</generateJSONChangeLog>-->
+                    <!--<generateMarkdownChangeLog>true</generateMarkdownChangeLog>-->
+                    <!--<markdownChangeLogFilename>CHANGELOG.md</markdownChangeLogFilename>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 
