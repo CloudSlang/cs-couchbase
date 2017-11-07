@@ -52,6 +52,7 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <maven.sources.skip>true</maven.sources.skip>
+        <custom.nexus>overwriten_by_ci</custom.nexus>
     </properties>
 
     <developers>
@@ -209,6 +210,11 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                </plugin>
+
             </plugins>
         </pluginManagement>
 
@@ -229,8 +235,6 @@
                     <properties>
                         <copyright.year>2017</copyright.year>
                     </properties>
-                    <!--Custom mapping for java extensions-->
-                    <useDefaultMapping>false</useDefaultMapping>
                     <mapping>
                         <java>cs-actions-java-header</java>
                     </mapping>
@@ -268,5 +272,31 @@
             <!--</plugin>-->
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>customDeployment</id>
+            <build>
+                <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>custom-deployment-to-nexus</id>
+                            <goals>
+                                <goal>deploy</goal>
+                            </goals>
+                                <phase>deploy</phase>
+                            <configuration>
+                                <altDeploymentRepository>${custom.nexus}</altDeploymentRepository>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
