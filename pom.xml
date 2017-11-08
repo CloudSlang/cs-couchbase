@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -30,14 +31,15 @@
 
     <properties>
         <!--Maven versions-->
-        <nexus-staging-maven-plugin>1.6.8</nexus-staging-maven-plugin>
-        <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
-        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
-        <maven-license-plugin.version>3.0</maven-license-plugin.version>
-        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
         <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
         <gitlog-maven-plugin.version>&gt;1.13.3</gitlog-maven-plugin.version>
+        <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
+        <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
+        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+        <maven-license-plugin.version>3.0</maven-license-plugin.version>
+        <nexus-staging-maven-plugin>1.6.8</nexus-staging-maven-plugin>
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <!--Project dependencies-->
         <score-content-sdk.version>1.10.6</score-content-sdk.version>
         <commons-validator.version>1.6</commons-validator.version>
@@ -213,6 +215,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy-plugin.version}</version>
                 </plugin>
 
             </plugins>
@@ -248,63 +251,50 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>com.github.danielflower.mavenplugins</groupId>-->
-                <!--<artifactId>gitlog-maven-plugin</artifactId>-->
-                <!--<version>1.13.3</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<goals>-->
-                            <!--<goal>generate</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<configuration>-->
-                    <!--<outputDirectory>${project.basedir}</outputDirectory>-->
-                    <!--<fullGitMessage>false</fullGitMessage>-->
-                    <!--<issueManagementUrl>https://github.com/CloudSlang/cs-couchbase/issues</issueManagementUrl>-->
-                    <!--<generatePlainTextChangeLog>false</generatePlainTextChangeLog>-->
-                    <!--<generateSimpleHTMLChangeLog>false</generateSimpleHTMLChangeLog>-->
-                    <!--<generateJSONChangeLog>false</generateJSONChangeLog>-->
-                    <!--<generateMarkdownChangeLog>true</generateMarkdownChangeLog>-->
-                    <!--<markdownChangeLogFilename>CHANGELOG.md</markdownChangeLogFilename>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
+            <plugin>
+            <groupId>com.github.danielflower.mavenplugins</groupId>
+            <artifactId>gitlog-maven-plugin</artifactId>
+            <version>1.13.3</version>
+            <executions>
+            <execution>
+            <goals>
+            <goal>generate</goal>
+            </goals>
+            </execution>
+            </executions>
+            <configuration>
+            <outputDirectory>${project.basedir}</outputDirectory>
+            <fullGitMessage>false</fullGitMessage>
+            <issueManagementUrl>https://github.com/CloudSlang/cs-couchbase/issues</issueManagementUrl>
+            <generatePlainTextChangeLog>false</generatePlainTextChangeLog>
+            <generateSimpleHTMLChangeLog>false</generateSimpleHTMLChangeLog>
+            <generateJSONChangeLog>false</generateJSONChangeLog>
+            <generateMarkdownChangeLog>true</generateMarkdownChangeLog>
+            <markdownChangeLogFilename>CHANGELOG.md</markdownChangeLogFilename>
+            </configuration>
+            </plugin>
         </plugins>
     </build>
 
     <profiles>
         <profile>
-            <id>customDeployment</id>
+            <id>deploy-internal</id>
             <build>
                 <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>2.8.2</version>
-                    <executions>
-                        <execution>
-                            <id>custom-deployment-to-nexus</id>
-                            <goals>
-                                <goal>deploy</goal>
-                            </goals>
-                                <phase>deploy</phase>
-                            <configuration>
-                                <altDeploymentRepository>${custom.nexus}</altDeploymentRepository>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>${maven-source-plugin.version}</version>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <version>${maven-deploy-plugin.version}</version>
                         <executions>
                             <execution>
-                                <id>attach-sources</id>
+                                <id>custom-deployment-to-nexus</id>
                                 <goals>
-                                    <goal>jar-no-fork</goal>
+                                    <goal>deploy</goal>
                                 </goals>
+                                <phase>deploy</phase>
+                                <configuration>
+                                    <altDeploymentRepository>${custom.nexus}</altDeploymentRepository>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
