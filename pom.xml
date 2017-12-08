@@ -216,7 +216,6 @@
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>${maven-deploy-plugin.version}</version>
                 </plugin>
-
             </plugins>
         </pluginManagement>
 
@@ -251,26 +250,8 @@
                 </executions>
             </plugin>
             <plugin>
-            <groupId>com.github.danielflower.mavenplugins</groupId>
-            <artifactId>gitlog-maven-plugin</artifactId>
-            <version>1.13.3</version>
-            <executions>
-            <execution>
-            <goals>
-            <goal>generate</goal>
-            </goals>
-            </execution>
-            </executions>
-            <configuration>
-            <outputDirectory>${project.basedir}</outputDirectory>
-            <fullGitMessage>false</fullGitMessage>
-            <issueManagementUrl>https://github.com/CloudSlang/cs-couchbase/issues</issueManagementUrl>
-            <generatePlainTextChangeLog>false</generatePlainTextChangeLog>
-            <generateSimpleHTMLChangeLog>false</generateSimpleHTMLChangeLog>
-            <generateJSONChangeLog>false</generateJSONChangeLog>
-            <generateMarkdownChangeLog>true</generateMarkdownChangeLog>
-            <markdownChangeLogFilename>CHANGELOG.md</markdownChangeLogFilename>
-            </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
