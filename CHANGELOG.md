@@ -1,5 +1,28 @@
 # io.cloudslang.content:cs-couchbase v0.1.1-SNAPSHOT git changelog
 
+
+**cs-couchbase-0.1.1-RC17**  
+**cs-couchbase-0.1.1-RC16**  
+2017-11-08 09:10:06 +0200    POM.xml cleanup (moldovso)  
+
+**cs-couchbase-0.1.1-RC15**  
+**cs-couchbase-0.1.1-RC14**  
+**cs-couchbase-0.1.1-RC13**  
+2017-11-07 16:36:52 +0200    Double sources fix (moldovso)  
+
+**cs-couchbase-0.1.1-RC12**  
+**cs-couchbase-0.1.1-RC11**  
+2017-11-07 16:27:34 +0200    Added internal release profile (moldovso)  
+
+**cs-couchbase-0.1.1-RC8**  
+**cs-couchbase-0.1.1-RC7**  
+**cs-couchbase-0.1.1-RC6**  
+**cs-couchbase-0.1.1-RC4**  
+**cs-couchbase-0.1.1-RC3**  
+**cs-couchbase-0.1.1-RC2**  
+**cs-couchbase-0.1.1-RC1**  
+2017-10-26 20:53:50 +0300    Temporary gitlog plugin disable (moldovso)  
+2017-10-26 02:39:55 +0300    Update logic in pom file (Sorin Moldovan)  
 2017-10-24 16:14:14 +0300    Test webhooks (moldovso)  
 2017-10-24 16:06:56 +0300    Update packages to latest version available. (moldovso)  
 2017-10-24 15:08:26 +0300    Implement automatic dependency analyzer (moldovso)  
