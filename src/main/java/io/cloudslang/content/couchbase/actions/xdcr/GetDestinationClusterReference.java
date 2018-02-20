@@ -22,34 +22,40 @@
  * limitations under the License.
  */
 
-package io.cloudslang.content.couchbase.actions.cluster;
+/*******************************************************************************
+ * (c) Copyright 2017 Hewlett-Packard Development Company, L.P.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Apache License v2.0 which accompany this distribution.
+ *
+ * The Apache License is available at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *******************************************************************************/
+package io.cloudslang.content.couchbase.actions.xdcr;
 
 import com.hp.oo.sdk.content.annotations.Action;
 import com.hp.oo.sdk.content.annotations.Output;
 import com.hp.oo.sdk.content.annotations.Param;
 import com.hp.oo.sdk.content.annotations.Response;
-import com.hp.oo.sdk.content.plugin.ActionMetadata.MatchType;
-import com.hp.oo.sdk.content.plugin.ActionMetadata.ResponseType;
 import io.cloudslang.content.constants.ReturnCodes;
-import io.cloudslang.content.couchbase.entities.inputs.ClusterInputs;
 import io.cloudslang.content.couchbase.entities.inputs.CommonInputs;
 import io.cloudslang.content.couchbase.execute.CouchbaseService;
 import io.cloudslang.content.couchbase.factory.HttpClientInputsBuilder;
 import io.cloudslang.content.httpclient.HttpClientInputs;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpGet;
 
 import java.util.Map;
 
+import static com.hp.oo.sdk.content.plugin.ActionMetadata.MatchType.COMPARE_EQUAL;
+import static com.hp.oo.sdk.content.plugin.ActionMetadata.ResponseType.ERROR;
+import static com.hp.oo.sdk.content.plugin.ActionMetadata.ResponseType.RESOLVED;
 import static io.cloudslang.content.constants.OutputNames.EXCEPTION;
 import static io.cloudslang.content.constants.OutputNames.RETURN_CODE;
 import static io.cloudslang.content.constants.OutputNames.RETURN_RESULT;
 import static io.cloudslang.content.constants.ResponseNames.FAILURE;
 import static io.cloudslang.content.constants.ResponseNames.SUCCESS;
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Api.CLUSTER;
-import static io.cloudslang.content.couchbase.entities.constants.Constants.ClusterActions.REBALANCING_NODES;
-import static io.cloudslang.content.couchbase.entities.constants.Inputs.ClusterInputs.EJECTED_NODES;
-import static io.cloudslang.content.couchbase.entities.constants.Inputs.ClusterInputs.KNOWN_NODES;
-import static io.cloudslang.content.couchbase.entities.constants.Inputs.CommonInputs.DELIMITER;
+import static io.cloudslang.content.couchbase.entities.constants.Constants.ClusterActions.GET_DESTINATION_CLUSTER_REFERENCE;
 import static io.cloudslang.content.couchbase.entities.constants.Inputs.CommonInputs.ENDPOINT;
 import static io.cloudslang.content.httpclient.HttpClientInputs.CONNECT_TIMEOUT;
 import static io.cloudslang.content.httpclient.HttpClientInputs.KEEP_ALIVE;
@@ -70,13 +76,17 @@ import static io.cloudslang.content.httpclient.HttpClientInputs.X509_HOSTNAME_VE
 import static io.cloudslang.content.utils.OutputUtilities.getFailureResultsMap;
 
 /**
- * Created by TusaM
- * 5/11/2017.
+ * Created by Mihai Tusa
+ * 9/15/2017.
  */
-public class RebalancingNodes {
+public class GetDestinationClusterReference {
     /**
-     * Starts rebalancing process on all cluster nodes.
-     * https://developer.couchbase.com/documentation/server/4.6/rest-api/rest-cluster-rebalance.html
+     * Retrieves the destination cluster reference.
+     * https://developer.couchbase.com/documentation/server/3.x/admin/REST/rest-xdcr-get-ref.html
+     * <p>
+     * Notes: To use XDCR, source and destination clusters must be established. A source cluster is the cluster where the
+     * original data is stored. A destination cluster is the cluster where the replica data is stored. Data is copied from
+     * the source cluster to the destination cluster.
      *
      * @param endpoint             Endpoint to which request will be sent. A valid endpoint will be formatted as it shows in
      *                             bellow example.
@@ -135,27 +145,20 @@ public class RebalancingNodes {
      *                             execution it will close it.
      *                             Valid values: "true", "false"
      *                             Default value: "true"
-     * @param ejectedNodes         Optional - A string that contains: none, one or more nodes (that previously were part
-     *                             of cluster and at the moment are marked as rejected) separated by delimiter.
-     *                             Example: "ns_2@10.0.0.4,ns_2@10.0.0.5,ns_2@10.0.0.6"
-     * @param knownNodes           Optional - A string that contains: none, one or more nodes that are known within the
-     *                             cluster.
-     *                             Example: "ns_2@10.0.0.2,ns_2@10.0.0.3"
-     *                             Note: The inputs: ejectedNodes, knownNodes cannot be both blank in order to successfully trigger nodes rebalancing.
      * @return A map with strings as keys and strings as values that contains: outcome of the action (or failure message
      * and the exception if there is one), returnCode of the operation and the ID of the request
      */
-    @Action(name = "Rebalancing Nodes",
+    @Action(name = "Get Destination Cluster Reference",
             outputs = {
                     @Output(RETURN_CODE),
                     @Output(RETURN_RESULT),
                     @Output(EXCEPTION)
             },
             responses = {
-                    @Response(text = SUCCESS, field = RETURN_CODE, value = ReturnCodes.SUCCESS,
-                            matchType = MatchType.COMPARE_EQUAL, responseType = ResponseType.RESOLVED),
-                    @Response(text = FAILURE, field = RETURN_CODE, value = ReturnCodes.FAILURE,
-                            matchType = MatchType.COMPARE_EQUAL, responseType = ResponseType.ERROR, isOnFail = true)
+                    @Response(text = SUCCESS, field = RETURN_CODE, value = ReturnCodes.SUCCESS, matchType = COMPARE_EQUAL,
+                            responseType = RESOLVED),
+                    @Response(text = FAILURE, field = RETURN_CODE, value = ReturnCodes.FAILURE, matchType = COMPARE_EQUAL,
+                            responseType = ERROR, isOnFail = true)
             })
     public Map<String, String> execute(@Param(value = ENDPOINT, required = true) String endpoint,
                                        @Param(value = USERNAME, required = true) String username,
@@ -173,10 +176,7 @@ public class RebalancingNodes {
                                        @Param(value = CONNECT_TIMEOUT) String connectTimeout,
                                        @Param(value = SOCKET_TIMEOUT) String socketTimeout,
                                        @Param(value = USE_COOKIES) String useCookies,
-                                       @Param(value = KEEP_ALIVE) String keepAlive,
-                                       @Param(value = EJECTED_NODES) String ejectedNodes,
-                                       @Param(value = KNOWN_NODES) String knownNodes,
-                                       @Param(value = DELIMITER) String delimiter) {
+                                       @Param(value = KEEP_ALIVE) String keepAlive) {
         try {
             final HttpClientInputsBuilder httpClientInputsBuilder = new HttpClientInputsBuilder.Builder()
                     .withUsername(username)
@@ -194,21 +194,15 @@ public class RebalancingNodes {
                     .build();
 
             final HttpClientInputs httpClientInputs = httpClientInputsBuilder
-                    .getHttpClientInputs(HttpPost.METHOD_NAME, proxyHost, proxyPort, proxyUsername, proxyPassword);
+                    .getHttpClientInputs(HttpGet.METHOD_NAME, proxyHost, proxyPort, proxyUsername, proxyPassword);
 
             final CommonInputs commonInputs = new CommonInputs.Builder()
-                    .withAction(REBALANCING_NODES)
+                    .withAction(GET_DESTINATION_CLUSTER_REFERENCE)
                     .withApi(CLUSTER)
                     .withEndpoint(endpoint)
-                    .withDelimiter(delimiter)
                     .build();
 
-            final ClusterInputs clusterInputs = new ClusterInputs.Builder()
-                    .withEjectedNodes(ejectedNodes)
-                    .withKnownNodes(knownNodes)
-                    .build();
-
-            return new CouchbaseService().execute(httpClientInputs, commonInputs, clusterInputs);
+            return new CouchbaseService().execute(httpClientInputs, commonInputs);
         } catch (Exception exception) {
             return getFailureResultsMap(exception);
         }

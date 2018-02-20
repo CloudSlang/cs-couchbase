@@ -7,6 +7,20 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  */
+/*
+ * (c) Copyright 2017 EntIT Software LLC, a Micro Focus company, L.P.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Apache License v2.0 which accompany this distribution.
+ *
+ * The Apache License is available at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package io.cloudslang.content.couchbase.factory.cluster;
 
@@ -21,8 +35,8 @@ import static io.cloudslang.content.couchbase.entities.constants.Inputs.ClusterI
 import static io.cloudslang.content.couchbase.entities.constants.Inputs.ClusterInputs.KNOWN_NODES;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getPayloadString;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.setOptionalMapEntry;
-import static io.cloudslang.content.couchbase.utils.InputsUtil.validateNotBothBlankInputs;
-import static io.cloudslang.content.couchbase.utils.InputsUtil.validateRebalancingNodesPayloadInputs;
+import static io.cloudslang.content.couchbase.validate.Validators.validateNotBothBlankInputs;
+import static io.cloudslang.content.couchbase.validate.Validators.validateRebalancingNodesPayloadInputs;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
@@ -44,8 +58,10 @@ public class ClusterHelper {
         validateRebalancingNodesPayloadInputs(knownNodesString, delimiter);
 
         Map<String, String> payloadMap = new HashMap<>();
-        setOptionalMapEntry(payloadMap, EJECTED_NODES, wrapper.getClusterInputs().getEjectedNodes(), isNotBlank(wrapper.getClusterInputs().getEjectedNodes()));
-        setOptionalMapEntry(payloadMap, KNOWN_NODES, wrapper.getClusterInputs().getKnownNodes(), isNotBlank(wrapper.getClusterInputs().getKnownNodes()));
+        setOptionalMapEntry(payloadMap, EJECTED_NODES, wrapper.getClusterInputs().getEjectedNodes(),
+                isNotBlank(wrapper.getClusterInputs().getEjectedNodes()));
+        setOptionalMapEntry(payloadMap, KNOWN_NODES, wrapper.getClusterInputs().getKnownNodes(),
+                isNotBlank(wrapper.getClusterInputs().getKnownNodes()));
 
         return payloadMap;
     }

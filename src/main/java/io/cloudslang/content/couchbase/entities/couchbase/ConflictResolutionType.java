@@ -7,11 +7,30 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  */
+/*
+ * (c) Copyright 2017 EntIT Software LLC, a Micro Focus company, L.P.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Apache License v2.0 which accompany this distribution.
+ *
+ * The Apache License is available at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package io.cloudslang.content.couchbase.entities.couchbase;
 
-import static io.cloudslang.content.couchbase.utils.InputsUtil.getEnumValidValuesString;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+import static io.cloudslang.content.couchbase.utils.InputsUtil.getEnumValues;
 import static java.lang.String.format;
+import static java.util.Arrays.stream;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
@@ -21,6 +40,13 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 public enum ConflictResolutionType {
     LWW("lww"),
     SEQNO("seqno");
+
+    private static final Map<String, String> CONFLICT_RESOLUTION_TYPE_MAP = new HashMap<>();
+
+    static {
+        stream(values())
+                .forEach(bucketType -> CONFLICT_RESOLUTION_TYPE_MAP.put(bucketType.name().toLowerCase(), bucketType.getValue()));
+    }
 
     private final String value;
 
@@ -32,18 +58,11 @@ public enum ConflictResolutionType {
         return value;
     }
 
-    public static String getValue(String input) {
-        if (isBlank(input)) {
-            return SEQNO.getValue();
-        }
-
-        for (ConflictResolutionType resolution : ConflictResolutionType.values()) {
-            if (resolution.getValue().equalsIgnoreCase(input)) {
-                return resolution.getValue();
-            }
-        }
-
-        throw new RuntimeException(format("Invalid Couchbase conflict resolution type value: '%s'. Valid values: '%s'.",
-                input, getEnumValidValuesString(ConflictResolutionType.class)));
+    public static String getConflictResolutionTypeValue(String input) {
+        return isBlank(input) ? SEQNO.getValue() :
+                Optional
+                        .ofNullable(CONFLICT_RESOLUTION_TYPE_MAP.get(input))
+                        .orElseThrow(() -> new RuntimeException(format("Invalid Couchbase conflict resolution type value: '%s'. Valid values: '%s'.",
+                                input, getEnumValues(ConflictResolutionType.class))));
     }
 }
