@@ -208,11 +208,4 @@ public class DeleteBucket {
             return getFailureResultsMap(exception);
         }
     }
-
-    public static void main(String[] args) {
-        DeleteBucket action = new DeleteBucket();
-        Map<String, String> results = action.execute("http://ie1-usd101-qa.qa.betfair:8091", "cbadmin", "thebigboss",
-                "", "", "", "", "false", "", "", "", "", "", "", "", "", "", "testBucket");
-        System.out.println(results.get("returnResult"));
-    }
 }
