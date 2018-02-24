@@ -7,6 +7,20 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  */
+/*
+ * (c) Copyright 2017 EntIT Software LLC, a Micro Focus company, L.P.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Apache License v2.0 which accompany this distribution.
+ *
+ * The Apache License is available at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package io.cloudslang.content.couchbase.execute;
 
@@ -14,13 +28,21 @@ import io.cloudslang.content.couchbase.entities.inputs.BucketInputs;
 import io.cloudslang.content.couchbase.entities.inputs.ClusterInputs;
 import io.cloudslang.content.couchbase.entities.inputs.CommonInputs;
 import io.cloudslang.content.couchbase.entities.inputs.NodeInputs;
+import io.cloudslang.content.couchbase.factory.HttpClientInputsBuilder;
 import io.cloudslang.content.httpclient.CSHttpClient;
 import io.cloudslang.content.httpclient.HttpClientInputs;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.net.MalformedURLException;
 import java.util.HashMap;
 
-import static io.cloudslang.content.couchbase.utils.InputsUtil.getHttpClientInputs;
 import static io.cloudslang.content.couchbase.utils.TestUtils.setExpectedExceptions;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -30,16 +52,8 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * Created by TusaM
@@ -61,7 +75,7 @@ public class CouchbaseServiceTest {
     @Before
     public void init() throws Exception {
         whenNew(CSHttpClient.class).withNoArguments().thenReturn(csHttpClientMock);
-        when(csHttpClientMock.execute(any(HttpClientInputs.class))).thenReturn(new HashMap<String, String>());
+        when(csHttpClientMock.execute(any(HttpClientInputs.class))).thenReturn(new HashMap<>());
         toTest = new CouchbaseService();
     }
 
@@ -165,6 +179,21 @@ public class CouchbaseServiceTest {
 
         assertEquals("http://somewhere.couchbase.com:8091/pools/default/buckets", httpClientInputs.getUrl());
         assertEquals("X-memcachekv-Store-Client-Specification-Version:0.1", httpClientInputs.getHeaders());
+        assertEquals("application/json", httpClientInputs.getContentType());
+    }
+
+    @Test
+    public void testGetAutoFailOverSettings() throws MalformedURLException {
+        httpClientInputs = getHttpClientInputs("someUser", "credentials", "", "",
+                "", "", "", "", "", "",
+                "", "", "", "", "", "", "GET");
+        CommonInputs commonInputs = getCommonInputs("GetAutoFailOverSettings", "cluster", "http://somewhere.couchbase.com:8091");
+        toTest.execute(httpClientInputs, commonInputs);
+
+        verify(csHttpClientMock, times(1)).execute(eq(httpClientInputs));
+        verifyNoMoreInteractions(csHttpClientMock);
+
+        assertEquals("http://somewhere.couchbase.com:8091/settings/autoFailover", httpClientInputs.getUrl());
         assertEquals("application/json", httpClientInputs.getContentType());
     }
 
@@ -385,6 +414,21 @@ public class CouchbaseServiceTest {
         verify(csHttpClientMock, never()).execute(eq(httpClientInputs));
     }
 
+    @Test
+    public void testGetDestinationClusterReference() throws MalformedURLException {
+        httpClientInputs = getHttpClientInputs("anonymous", "credentials", "", "",
+                "", "", "", "", "", "", "", "", "", "", "", "", "GET");
+        CommonInputs commonInputs = getCommonInputs("GetDestinationClusterReference", "cluster", "http://somewhere.couchbase.com:8091");
+        toTest.execute(httpClientInputs, commonInputs);
+
+        verify(csHttpClientMock, times(1)).execute(eq(httpClientInputs));
+        verifyNoMoreInteractions(csHttpClientMock);
+
+        assertEquals("http://somewhere.couchbase.com:8091/pools/default/remoteClusters", httpClientInputs.getUrl());
+        assertEquals("X-memcachekv-Store-Client-Specification-Version:0.1", httpClientInputs.getHeaders());
+        assertEquals("application/json", httpClientInputs.getContentType());
+    }
+
     private CommonInputs getCommonInputs(String action, String api, String endpoint) {
         return new CommonInputs.Builder()
                 .withAction(action)
@@ -401,4 +445,29 @@ public class CouchbaseServiceTest {
                 .withDelimiter(delimiter)
                 .build();
     }
+
+    private HttpClientInputs getHttpClientInputs(String username, String password, String proxyHost, String proxyPort,
+                                                 String proxyUsername, String proxyPassword, String trustAllRoots,
+                                                 String x509HostnameVerifier, String trustKeystore, String trustPassword,
+                                                 String keystore, String keystorePassword, String connectTimeout,
+                                                 String socketTimeout, String useCookies, String keepAlive, String method) {
+        final HttpClientInputsBuilder httpClientInputsBuilder = new HttpClientInputsBuilder.Builder()
+                .withUsername(username)
+                .withPassword(password)
+                .withTrustAllRoots(trustAllRoots)
+                .withX509HostnameVerifier(x509HostnameVerifier)
+                .withTrustKeystore(trustKeystore)
+                .withTrustPassword(trustPassword)
+                .withKeystore(keystore)
+                .withKeystorePassword(keystorePassword)
+                .withConnectTimeout(connectTimeout)
+                .withSocketTimeout(socketTimeout)
+                .withUseCookies(useCookies)
+                .withKeepAlive(keepAlive)
+                .build();
+
+        return httpClientInputsBuilder
+                .getHttpClientInputs(method, proxyHost, proxyPort, proxyUsername, proxyPassword);
+    }
+
 }

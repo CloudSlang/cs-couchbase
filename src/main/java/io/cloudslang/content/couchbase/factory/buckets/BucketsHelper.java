@@ -7,21 +7,43 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  */
+/*
+ * (c) Copyright 2017 EntIT Software LLC, a Micro Focus company, L.P.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Apache License v2.0 which accompany this distribution.
+ *
+ * The Apache License is available at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package io.cloudslang.content.couchbase.factory.buckets;
 
-import io.cloudslang.content.couchbase.entities.couchbase.AuthType;
 import io.cloudslang.content.couchbase.entities.inputs.InputsWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static io.cloudslang.content.couchbase.entities.constants.Constants.ErrorMessages.INPUTS_COMBINATION_ERROR_MESSAGE;
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Miscellaneous.AMPERSAND;
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Miscellaneous.EQUAL;
-import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.*;
-import static io.cloudslang.content.couchbase.utils.InputsUtil.setOptionalMapEntry;
+import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.BUCKET_TYPE;
+import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.CONFLICT_RESOLUTION_TYPE;
+import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.EVICTION_POLICY;
+import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.FLUSH_ENABLED;
+import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.PARALLEL_DB_VIEW_COMPACTION;
+import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.RAM_QUOTA_DB;
+import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.REPLICA_INDEX;
+import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.REPLICA_NUMBER;
+import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.SASL_PASSWORD;
+import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.THREADS_NUMBER;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getPayloadString;
+import static io.cloudslang.content.couchbase.utils.InputsUtil.setOptionalMapEntry;
+import static io.cloudslang.content.couchbase.validate.Validators.validateAuthType;
 import static io.cloudslang.content.httpclient.HttpClientInputs.AUTH_TYPE;
 import static io.cloudslang.content.httpclient.HttpClientInputs.PROXY_PORT;
 import static java.lang.String.valueOf;
@@ -61,11 +83,5 @@ public class BucketsHelper {
         payloadMap.put(THREADS_NUMBER, valueOf(wrapper.getBucketInputs().getThreadsNumber()));
 
         return payloadMap;
-    }
-
-    private void validateAuthType(Map<String, String> getPayloadMap, String authType) {
-        if (AuthType.SASL.getValue().equals(authType) && !getPayloadMap.containsKey(SASL_PASSWORD)) {
-            throw new RuntimeException(INPUTS_COMBINATION_ERROR_MESSAGE);
-        }
     }
 }
