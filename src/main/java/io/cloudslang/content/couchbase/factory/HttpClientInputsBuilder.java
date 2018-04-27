@@ -26,8 +26,8 @@ package io.cloudslang.content.couchbase.factory;
 import io.cloudslang.content.httpclient.HttpClientInputs;
 
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Miscellaneous.ALLOW_ALL;
-import static io.cloudslang.content.couchbase.validate.Validators.areBothValuesPresent;
-import static io.cloudslang.content.couchbase.validate.Validators.getValidOrDefaultValue;
+import static io.cloudslang.content.couchbase.validators.Validators.areBothValuesPresent;
+import static io.cloudslang.content.couchbase.validators.Validators.getValidOrDefaultValue;
 import static io.cloudslang.content.httpclient.build.auth.AuthTypes.BASIC;
 import static io.cloudslang.content.utils.NumberUtilities.isValidInt;
 import static java.lang.Boolean.FALSE;
@@ -158,63 +158,63 @@ public class HttpClientInputsBuilder {
             return new HttpClientInputsBuilder(this);
         }
 
-        public HttpClientInputsBuilder.Builder withUsername(String inputValue) {
+        public Builder withUsername(String inputValue) {
             this.username = inputValue;
             httpClientInputs.setUsername(username);
 
             return this;
         }
 
-        public HttpClientInputsBuilder.Builder withPassword(String inputValue) {
+        public Builder withPassword(String inputValue) {
             this.password = inputValue;
             httpClientInputs.setPassword(password);
 
             return this;
         }
 
-        public HttpClientInputsBuilder.Builder withTrustAllRoots(String inputValue) {
+        public Builder withTrustAllRoots(String inputValue) {
             this.trustAllRoots = valueOf(Boolean.valueOf(inputValue));
             httpClientInputs.setTrustAllRoots(trustAllRoots);
 
             return this;
         }
 
-        public HttpClientInputsBuilder.Builder withKeepAlive(String inputValue) {
+        public Builder withKeepAlive(String inputValue) {
             this.keepAlive = valueOf(!Boolean.valueOf(inputValue));
             httpClientInputs.setKeepAlive(keepAlive);
 
             return this;
         }
 
-        public HttpClientInputsBuilder.Builder withUseCookies(String inputValue) {
+        public Builder withUseCookies(String inputValue) {
             this.useCookies = valueOf(inputValue);
             httpClientInputs.setUseCookies(useCookies);
 
             return this;
         }
 
-        public HttpClientInputsBuilder.Builder withConnectTimeout(String inputValue) {
+        public Builder withConnectTimeout(String inputValue) {
             this.connectTimeout = valueOf(isValidInt(inputValue, 0, Integer.MAX_VALUE) ? parseInt(inputValue) : 0);
             httpClientInputs.setConnectTimeout(connectTimeout);
 
             return this;
         }
 
-        public HttpClientInputsBuilder.Builder withSocketTimeout(String inputValue) {
+        public Builder withSocketTimeout(String inputValue) {
             this.socketTimeout = valueOf(isValidInt(inputValue, 0, Integer.MAX_VALUE) ? parseInt(inputValue) : 0);
             httpClientInputs.setSocketTimeout(socketTimeout);
 
             return this;
         }
 
-        public HttpClientInputsBuilder.Builder withX509HostnameVerifier(String inputValue) {
+        public Builder withX509HostnameVerifier(String inputValue) {
             this.x509HostnameVerifier = getValidOrDefaultValue(inputValue, ALLOW_ALL, new String[]{"allow_all", "browser_compatible", "strict"});
             httpClientInputs.setX509HostnameVerifier(x509HostnameVerifier);
 
             return this;
         }
 
-        public HttpClientInputsBuilder.Builder withTrustKeystore(String inputValue) {
+        public Builder withTrustKeystore(String inputValue) {
             this.trustKeystore = inputValue;
             if (isNotBlank(trustKeystore)) {
                 httpClientInputs.setTrustKeystore(trustKeystore);
@@ -223,7 +223,7 @@ public class HttpClientInputsBuilder {
             return this;
         }
 
-        public HttpClientInputsBuilder.Builder withTrustPassword(String inputValue) {
+        public Builder withTrustPassword(String inputValue) {
             this.trustPassword = inputValue;
             if (isNotBlank(trustPassword)) {
                 httpClientInputs.setTrustPassword(trustPassword);
@@ -232,7 +232,7 @@ public class HttpClientInputsBuilder {
             return this;
         }
 
-        public HttpClientInputsBuilder.Builder withKeystore(String inputValue) {
+        public Builder withKeystore(String inputValue) {
             this.keystore = inputValue;
             if (isNotBlank(keystore)) {
                 httpClientInputs.setKeystore(keystore);
@@ -241,7 +241,7 @@ public class HttpClientInputsBuilder {
             return this;
         }
 
-        public HttpClientInputsBuilder.Builder withKeystorePassword(String inputValue) {
+        public Builder withKeystorePassword(String inputValue) {
             this.keystorePassword = inputValue;
             if (isNotBlank(keystorePassword)) {
                 httpClientInputs.setKeystorePassword(keystorePassword);

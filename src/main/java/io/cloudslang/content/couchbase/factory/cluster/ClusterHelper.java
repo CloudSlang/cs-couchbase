@@ -35,8 +35,8 @@ import static io.cloudslang.content.couchbase.entities.constants.Inputs.ClusterI
 import static io.cloudslang.content.couchbase.entities.constants.Inputs.ClusterInputs.KNOWN_NODES;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getPayloadString;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.setOptionalMapEntry;
-import static io.cloudslang.content.couchbase.validate.Validators.validateNotBothBlankInputs;
-import static io.cloudslang.content.couchbase.validate.Validators.validateRebalancingNodesPayloadInputs;
+import static io.cloudslang.content.couchbase.validators.Validators.validateNotBothBlankInputs;
+import static io.cloudslang.content.couchbase.validators.Validators.validateRebalancingNodesPayloadInputs;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**

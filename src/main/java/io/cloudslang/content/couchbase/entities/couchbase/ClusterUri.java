@@ -10,6 +10,11 @@
 
 package io.cloudslang.content.couchbase.entities.couchbase;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+import static java.util.Arrays.stream;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 /**
@@ -24,19 +29,23 @@ public enum ClusterUri {
     private final String key;
     private final String value;
 
+    private static final Map<String, String> CLUSTER_URI_MAP = new HashMap<>();
+
+    static {
+        stream(values())
+                .forEach(clusterUri -> CLUSTER_URI_MAP.put(clusterUri.getKey(), clusterUri.getValue()));
+    }
+
     ClusterUri(String key, String value) {
         this.key = key;
         this.value = value;
     }
 
-    public static String getValue(String key) {
-        for (ClusterUri uri : ClusterUri.values()) {
-            if (uri.getKey().equalsIgnoreCase(key)) {
-                return uri.getValue();
-            }
-        }
-
-        return EMPTY;
+    @SuppressWarnings("ConstantConditions")
+    public static String getValue(String input) {
+        return Optional
+                .ofNullable(CLUSTER_URI_MAP.get(input))
+                .orElse(EMPTY);
     }
 
     private String getKey() {

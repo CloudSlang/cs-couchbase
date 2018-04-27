@@ -36,8 +36,8 @@ import java.util.HashMap;
 
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getEnumValues;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getPayloadString;
-import static io.cloudslang.content.couchbase.validate.Validators.getValidIntValue;
-import static io.cloudslang.content.couchbase.validate.Validators.getValidPort;
+import static io.cloudslang.content.couchbase.validators.Validators.getValidIntValue;
+import static io.cloudslang.content.couchbase.validators.Validators.getValidPort;
 import static io.cloudslang.content.couchbase.utils.TestUtils.setExpectedExceptions;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.junit.Assert.assertEquals;
