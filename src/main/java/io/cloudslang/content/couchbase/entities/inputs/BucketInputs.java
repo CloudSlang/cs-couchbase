@@ -37,8 +37,8 @@ import static io.cloudslang.content.couchbase.entities.couchbase.ConflictResolut
 import static io.cloudslang.content.couchbase.entities.couchbase.EvictionPolicy.getEvictionPolicyValue;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getEnabledString;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getEnforcedBooleanCondition;
-import static io.cloudslang.content.couchbase.validate.Validators.getValidIntValue;
-import static io.cloudslang.content.couchbase.validate.Validators.getValidPort;
+import static io.cloudslang.content.couchbase.validators.Validators.getValidIntValue;
+import static io.cloudslang.content.couchbase.validators.Validators.getValidPort;
 import static java.lang.Boolean.FALSE;
 import static java.lang.String.valueOf;
 

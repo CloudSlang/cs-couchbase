@@ -375,7 +375,7 @@ public class CouchbaseServiceTest {
     @Test
     public void testFailOverNodeInvalidInternalNodeIpAddress() throws MalformedURLException {
         setExpectedExceptions(RuntimeException.class, exception, "The provided value for: " +
-                "\" anything here but not [at] symbol \" input must be a valid Couchbase internal node format.");
+                "[ anything here but not [at] symbol ] input must be a valid Couchbase internal node format.");
 
         CommonInputs commonInputs = getCommonInputs("FailOverNode", "nodes", "http://whatever.couchbase.com:8091");
         NodeInputs nodeInputs = new NodeInputs.Builder().withInternalNodeIpAddress(" anything here but not [at] symbol ").build();

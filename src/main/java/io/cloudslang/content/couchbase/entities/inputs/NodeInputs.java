@@ -25,7 +25,7 @@
 package io.cloudslang.content.couchbase.entities.inputs;
 
 import static io.cloudslang.content.couchbase.entities.couchbase.RecoveryType.getRecoveryTypeValue;
-import static io.cloudslang.content.couchbase.validate.Validators.getValidInternalNodeIpAddress;
+import static io.cloudslang.content.couchbase.validators.Validators.getValidInternalNodeIpAddress;
 
 /**
  * Created by TusaM

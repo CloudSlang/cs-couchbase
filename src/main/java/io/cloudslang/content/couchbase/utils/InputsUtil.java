@@ -24,13 +24,14 @@
 
 package io.cloudslang.content.couchbase.utils;
 
+import io.cloudslang.content.couchbase.entities.couchbase.ApiUriSuffix;
 import io.cloudslang.content.couchbase.entities.couchbase.AuthType;
 import io.cloudslang.content.couchbase.entities.couchbase.BucketType;
-import io.cloudslang.content.couchbase.entities.couchbase.ApiUriSuffix;
 import io.cloudslang.content.couchbase.entities.couchbase.ConflictResolutionType;
 import io.cloudslang.content.couchbase.entities.couchbase.EvictionPolicy;
 import io.cloudslang.content.couchbase.entities.couchbase.RecoveryType;
 import io.cloudslang.content.couchbase.entities.inputs.InputsWrapper;
+import org.jetbrains.annotations.NotNull;
 
 import java.net.MalformedURLException;
 import java.util.Map;
@@ -41,7 +42,7 @@ import static io.cloudslang.content.couchbase.entities.constants.Constants.Misce
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Values.INIT_INDEX;
 import static io.cloudslang.content.couchbase.entities.couchbase.SuffixUri.getSuffixUriValue;
 import static io.cloudslang.content.couchbase.factory.UriFactory.getUri;
-import static io.cloudslang.content.couchbase.validate.Validators.getValidUrl;
+import static io.cloudslang.content.couchbase.validators.Validators.getValidUrl;
 import static io.cloudslang.content.utils.NumberUtilities.isValidInt;
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
@@ -50,7 +51,6 @@ import static java.lang.String.valueOf;
 import static java.util.Arrays.stream;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.isBlank;
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.apache.commons.lang3.StringUtils.split;
 
 /**
@@ -72,24 +72,11 @@ public class InputsUtil {
     }
 
     public static String getPayloadString(Map<String, String> payloadMap, String separator, String suffix, boolean deleteLastChar) {
-        if (payloadMap.isEmpty()) {
-            return EMPTY;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        payloadMap.forEach((key, value) -> sb.append(key).append(separator).append(value).append(suffix));
-
-        return deleteLastChar ? sb.deleteCharAt(sb.length() - 1).toString() : sb.toString();
+        return payloadMap.isEmpty() ? EMPTY : buildPayloadString(payloadMap, separator, suffix, deleteLastChar);
     }
 
     public static String getEnabledString(String input, boolean enforcedBoolean) {
         return getEnforcedBooleanCondition(input, enforcedBoolean) ? valueOf(1) : valueOf(INIT_INDEX);
-    }
-
-    public static void setOptionalMapEntry(Map<String, String> inputMap, String key, String value, boolean condition) {
-        if (condition) {
-            inputMap.put(key, value);
-        }
     }
 
     public static String getInputWithDefaultValue(String input, String defaultValue) {
@@ -135,8 +122,8 @@ public class InputsUtil {
      */
     public static boolean getEnforcedBooleanCondition(String input, boolean enforcedBoolean) {
         return enforcedBoolean ?
-                isNotBlank(input) && stream(new String[]{"true", "false"}).anyMatch(b -> b.equalsIgnoreCase(input)) == parseBoolean(input) :
-                parseBoolean(input);
+                !isBlank(input) && stream(new String[]{"true", "false"})
+                        .anyMatch(b -> b.equalsIgnoreCase(input)) == parseBoolean(input) : parseBoolean(input);
     }
 
     public static <T extends Enum<T>> String getEnumValues(Class<T> inputEnum) {
@@ -159,5 +146,19 @@ public class InputsUtil {
                 });
 
         return isBlank(sb.toString()) ? EMPTY : sb.deleteCharAt(sb.length() - 2).toString().trim();
+    }
+
+    public static void setOptionalMapEntry(Map<String, String> inputMap, String key, String value, boolean condition) {
+        if (condition) {
+            inputMap.put(key, value);
+        }
+    }
+
+    @NotNull
+    private static String buildPayloadString(Map<String, String> payloadMap, String separator, String suffix, boolean deleteLastChar) {
+        StringBuilder sb = new StringBuilder();
+        payloadMap.forEach((key, value) -> sb.append(key).append(separator).append(value).append(suffix));
+
+        return deleteLastChar ? sb.deleteCharAt(sb.length() - 1).toString() : sb.toString();
     }
 }

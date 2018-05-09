@@ -43,7 +43,7 @@ import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketIn
 import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.THREADS_NUMBER;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getPayloadString;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.setOptionalMapEntry;
-import static io.cloudslang.content.couchbase.validate.Validators.validateAuthType;
+import static io.cloudslang.content.couchbase.validators.Validators.validateAuthType;
 import static io.cloudslang.content.httpclient.HttpClientInputs.AUTH_TYPE;
 import static io.cloudslang.content.httpclient.HttpClientInputs.PROXY_PORT;
 import static java.lang.String.valueOf;

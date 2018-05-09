@@ -21,9 +21,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.cloudslang.content.couchbase.validate;
+package io.cloudslang.content.couchbase.validators;
 
-import io.cloudslang.content.couchbase.entities.couchbase.AuthType;
 import org.apache.commons.validator.routines.InetAddressValidator;
 
 import java.net.MalformedURLException;
@@ -36,6 +35,7 @@ import static io.cloudslang.content.couchbase.entities.constants.Constants.Misce
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Miscellaneous.PORT_REGEX;
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Values.COUCHBASE_DEFAULT_PROXY_PORT;
 import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.SASL_PASSWORD;
+import static io.cloudslang.content.couchbase.entities.couchbase.AuthType.SASL;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getIntegerAboveMinimum;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getIntegerWithinValidRange;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getStringsArray;
@@ -61,8 +61,7 @@ public class Validators {
         }
 
         if (!compile(PORT_REGEX).matcher(input).matches()) {
-            throw new IllegalArgumentException(format("Incorrect provided value: %s input. %s",
-                    input, CONSTRAINS_ERROR_MESSAGE));
+            throw new IllegalArgumentException(format("Incorrect provided value: %s input. %s", input, CONSTRAINS_ERROR_MESSAGE));
         }
 
         return parseInt(input);
@@ -96,7 +95,7 @@ public class Validators {
     }
 
     public static void validateAuthType(Map<String, String> getPayloadMap, String authType) {
-        if (AuthType.SASL.getValue().equals(authType) && !getPayloadMap.containsKey(SASL_PASSWORD)) {
+        if (SASL.getValue().equals(authType) && !getPayloadMap.containsKey(SASL_PASSWORD)) {
             throw new RuntimeException(INPUTS_COMBINATION_ERROR_MESSAGE);
         }
     }
@@ -111,7 +110,7 @@ public class Validators {
 
     private static void validateClusterInternalNodeFormat(String input) {
         if (!input.contains(AT)) {
-            throw new RuntimeException(format("The provided value for: \"%s\" input must be a valid Couchbase internal node format.", input));
+            throw new RuntimeException(format("The provided value for: [%s] input must be a valid Couchbase internal node format.", input));
         }
 
         int indexOfAt = input.indexOf(AT);
