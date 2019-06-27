@@ -25,7 +25,7 @@
 package io.cloudslang.content.couchbase.entities.inputs;
 
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Miscellaneous.COMMA;
-import static io.cloudslang.content.couchbase.utils.InputsUtil.getInputWithDefaultValue;
+import static org.apache.commons.lang3.StringUtils.defaultIfBlank;
 
 /**
  * Created by Mihai Tusa
@@ -86,7 +86,7 @@ public class CommonInputs {
         }
 
         public Builder withDelimiter(String inputValue) {
-            delimiter = getInputWithDefaultValue(inputValue, COMMA);
+            delimiter = defaultIfBlank(inputValue, COMMA);
             return this;
         }
     }

@@ -28,30 +28,44 @@ import io.cloudslang.content.couchbase.entities.inputs.CommonInputs;
 import io.cloudslang.content.couchbase.entities.inputs.InputsWrapper;
 import io.cloudslang.content.httpclient.CSHttpClient;
 import io.cloudslang.content.httpclient.HttpClientInputs;
+import io.cloudslang.content.utils.OutputUtilities;
+import io.vavr.control.Try;
 
-import java.net.MalformedURLException;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
 
-import static io.cloudslang.content.couchbase.factory.HeadersBuilder.buildHeaders;
+import static io.cloudslang.content.couchbase.entities.constants.Constants.Values.THREADS_NUMBER;
 import static io.cloudslang.content.couchbase.factory.InputsWrapperBuilder.buildWrapper;
-import static io.cloudslang.content.couchbase.factory.PayloadBuilder.buildPayload;
-import static io.cloudslang.content.couchbase.utils.InputsUtil.buildUrl;
+import static io.cloudslang.content.couchbase.utils.InputsUtil.setupApiCall;
+import static java.util.concurrent.Executors.newFixedThreadPool;
 
 /**
  * Created by Mihai Tusa
  * 3/26/2017.
  */
 public class CouchbaseService {
+    private final ExecutorService executorService = newFixedThreadPool(THREADS_NUMBER);
+
     @SafeVarargs
-    public final <T> Map<String, String> execute(HttpClientInputs httpClientInputs, CommonInputs commonInputs, T... builders)
-            throws MalformedURLException {
+    public final <T> Map<String, String> execute(HttpClientInputs httpClientInputs, CommonInputs commonInputs, T... builders) {
         InputsWrapper wrapper = buildWrapper(httpClientInputs, commonInputs, builders);
 
-        httpClientInputs.setUrl(buildUrl(wrapper));
+        return Try
+                .of(() -> {
+                    setupApiCall(httpClientInputs, wrapper);
 
-        buildHeaders(wrapper);
-        buildPayload(wrapper);
+                    return asyncCall(httpClientInputs);
+                })
+                .onFailure(OutputUtilities::getFailureResultsMap)
+                .get();
+    }
 
-        return new CSHttpClient().execute(httpClientInputs);
+    private Map<String, String> asyncCall(HttpClientInputs httpClientInputs) throws InterruptedException, ExecutionException {
+        return CompletableFuture
+                .supplyAsync(() -> new CSHttpClient().execute(httpClientInputs), executorService)
+                .exceptionally(OutputUtilities::getFailureResultsMap)
+                .get();
     }
 }

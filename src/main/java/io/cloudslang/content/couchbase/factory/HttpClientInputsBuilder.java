@@ -24,19 +24,24 @@
 package io.cloudslang.content.couchbase.factory;
 
 import io.cloudslang.content.httpclient.HttpClientInputs;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Optional;
 
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Miscellaneous.ALLOW_ALL;
 import static io.cloudslang.content.couchbase.validators.Validators.areBothValuesPresent;
-import static io.cloudslang.content.couchbase.validators.Validators.getValidOrDefaultValue;
 import static io.cloudslang.content.httpclient.build.auth.AuthTypes.BASIC;
 import static io.cloudslang.content.utils.NumberUtilities.isValidInt;
 import static java.lang.Boolean.FALSE;
+import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.parseInt;
 import static java.lang.String.valueOf;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Arrays.stream;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 public class HttpClientInputsBuilder {
+    private static final String[] x509HostnameVerifierValidValuesArray = new String[]{"allow_all", "browser_compatible", "strict"};
 
     private static final HttpClientInputs httpClientInputs = new HttpClientInputs();
 
@@ -194,21 +199,28 @@ public class HttpClientInputsBuilder {
         }
 
         public Builder withConnectTimeout(String inputValue) {
-            this.connectTimeout = valueOf(isValidInt(inputValue, 0, Integer.MAX_VALUE) ? parseInt(inputValue) : 0);
+            this.connectTimeout = valueOf(isValidInt(inputValue, 0, MAX_VALUE) ? parseInt(inputValue) : 0);
             httpClientInputs.setConnectTimeout(connectTimeout);
 
             return this;
         }
 
         public Builder withSocketTimeout(String inputValue) {
-            this.socketTimeout = valueOf(isValidInt(inputValue, 0, Integer.MAX_VALUE) ? parseInt(inputValue) : 0);
+            this.socketTimeout = valueOf(isValidInt(inputValue, 0, MAX_VALUE) ? parseInt(inputValue) : 0);
             httpClientInputs.setSocketTimeout(socketTimeout);
 
             return this;
         }
 
         public Builder withX509HostnameVerifier(String inputValue) {
-            this.x509HostnameVerifier = getValidOrDefaultValue(inputValue, ALLOW_ALL, new String[]{"allow_all", "browser_compatible", "strict"});
+            this.x509HostnameVerifier = Optional
+                    .ofNullable(inputValue)
+                    .filter(StringUtils::isNotEmpty)
+                    .filter(any -> stream(x509HostnameVerifierValidValuesArray)
+                            .anyMatch(filter -> filter.contains(inputValue)))
+                    .map(s -> inputValue)
+                    .orElse(ALLOW_ALL);
+
             httpClientInputs.setX509HostnameVerifier(x509HostnameVerifier);
 
             return this;

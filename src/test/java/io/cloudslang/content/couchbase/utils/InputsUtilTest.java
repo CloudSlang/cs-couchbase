@@ -34,7 +34,7 @@ import org.junit.rules.ExpectedException;
 
 import java.util.HashMap;
 
-import static io.cloudslang.content.couchbase.utils.InputsUtil.getEnumValues;
+import static io.cloudslang.content.couchbase.utils.InputsUtil.buildErrorMessage;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getPayloadString;
 import static io.cloudslang.content.couchbase.validators.Validators.getValidIntValue;
 import static io.cloudslang.content.couchbase.validators.Validators.getValidPort;
@@ -48,32 +48,32 @@ import static org.junit.Assert.assertEquals;
  */
 public class InputsUtilTest {
     @Rule
-    public ExpectedException exception = ExpectedException.none();
+    public final ExpectedException exception = ExpectedException.none();
 
     @Test
     public void testGetEnumValidAuthTypeValuesString() {
-        String toTest = getEnumValues(AuthType.class);
+        String toTest = buildErrorMessage(AuthType.class);
 
         assertEquals("none, sasl", toTest);
     }
 
     @Test
     public void testGetEnumValidBucketTypeValuesString() {
-        String toTest = getEnumValues(BucketType.class);
+        String toTest = buildErrorMessage(BucketType.class);
 
         assertEquals("couchbase, membase", toTest);
     }
 
     @Test
     public void testGetEnumValidConflictResolutionTypeValuesString() {
-        String toTest = getEnumValues(ConflictResolutionType.class);
+        String toTest = buildErrorMessage(ConflictResolutionType.class);
 
         assertEquals("lww, seqno", toTest);
     }
 
     @Test
     public void testGetEnumValidEvictionPolicyValuesString() {
-        String toTest = getEnumValues(EvictionPolicy.class);
+        String toTest = buildErrorMessage(EvictionPolicy.class);
 
         assertEquals("fullEviction, valueOnly", toTest);
     }

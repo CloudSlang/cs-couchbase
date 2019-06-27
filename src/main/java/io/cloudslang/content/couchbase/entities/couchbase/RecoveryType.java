@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static io.cloudslang.content.couchbase.utils.InputsUtil.getEnumValues;
+import static io.cloudslang.content.couchbase.utils.InputsUtil.buildErrorMessage;
 import static java.lang.String.format;
 import static java.util.Arrays.stream;
 
@@ -43,8 +43,7 @@ public enum RecoveryType {
     private static final Map<String, String> RECOVERY_TYPE_MAP = new HashMap<>();
 
     static {
-        stream(values())
-                .forEach(recoveryType -> RECOVERY_TYPE_MAP.put(recoveryType.name().toLowerCase(), recoveryType.getValue()));
+        stream(values()).forEach(entry -> RECOVERY_TYPE_MAP.put(entry.name().toLowerCase(), entry.getValue()));
     }
 
     private final String value;
@@ -61,6 +60,6 @@ public enum RecoveryType {
         return Optional
                 .ofNullable(RECOVERY_TYPE_MAP.get(input))
                 .orElseThrow(() -> new RuntimeException(format("Invalid Couchbase node recovery type value: '%s'. Valid values: '%s'.",
-                        input, getEnumValues(RecoveryType.class))));
+                        input, buildErrorMessage(RecoveryType.class))));
     }
 }

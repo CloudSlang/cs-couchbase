@@ -64,7 +64,7 @@ import static org.powermock.api.mockito.PowerMockito.whenNew;
 @PrepareForTest({CSHttpClient.class, CouchbaseService.class})
 public class CouchbaseServiceTest {
     @Rule
-    public ExpectedException exception = ExpectedException.none();
+    public final ExpectedException exception = ExpectedException.none();
 
     @Mock
     private CSHttpClient csHttpClientMock;
@@ -80,7 +80,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testCreateOrEditBucket() throws MalformedURLException {
+    public void testCreateOrEditBucket() {
         httpClientInputs = getHttpClientInputs("someUser", "credentials", "", "",
                 "", "", "", "", "", "",
                 "", "", "", "", "", "", "POST");
@@ -122,7 +122,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testCreateOrEditBucketWithoutSaslPassword() throws MalformedURLException {
+    public void testCreateOrEditBucketWithoutSaslPassword() {
         setExpectedExceptions(RuntimeException.class, exception, "The combination of values supplied for inputs: " +
                 "authType, proxyPort and/or saslPassword doesn't meet conditions for general purpose usage.");
 
@@ -151,7 +151,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testDeleteBucket() throws MalformedURLException {
+    public void testDeleteBucket() {
         httpClientInputs = getHttpClientInputs("someUser", "credentials", "", "",
                 "", "", "", "", "", "",
                 "", "", "", "", "", "", "DELETE");
@@ -167,7 +167,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testGetAllBuckets() throws MalformedURLException {
+    public void testGetAllBuckets() {
         httpClientInputs = getHttpClientInputs("someUser", "credentials", "", "",
                 "", "", "", "", "", "",
                 "", "", "", "", "", "", "GET");
@@ -183,7 +183,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testGetAutoFailOverSettings() throws MalformedURLException {
+    public void testGetAutoFailOverSettings() {
         httpClientInputs = getHttpClientInputs("someUser", "credentials", "", "",
                 "", "", "", "", "", "",
                 "", "", "", "", "", "", "GET");
@@ -198,7 +198,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testGetBucket() throws MalformedURLException {
+    public void testGetBucket() {
         httpClientInputs = getHttpClientInputs("someUser", "credentials", "", "",
                 "", "", "", "", "", "",
                 "", "", "", "", "", "", "GET");
@@ -215,7 +215,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testGetBucketStatistics() throws MalformedURLException {
+    public void testGetBucketStatistics() {
         httpClientInputs = getHttpClientInputs("someUser", "credentials", "", "",
                 "", "", "", "", "", "",
                 "", "", "", "", "", "", "GET");
@@ -232,7 +232,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testGetClusterDetails() throws MalformedURLException {
+    public void testGetClusterDetails() {
         httpClientInputs = getHttpClientInputs("someUser", "credentials", "", "",
                 "", "", "", "", "", "",
                 "", "", "", "", "", "", "GET");
@@ -248,7 +248,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testGetClusterInfo() throws MalformedURLException {
+    public void testGetClusterInfo() {
         httpClientInputs = getHttpClientInputs("someUser", "credentials", "", "",
                 "", "", "", "", "", "",
                 "", "", "", "", "", "", "GET");
@@ -264,7 +264,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testGetDesignDocsInfo() throws MalformedURLException {
+    public void testGetDesignDocsInfo() {
         httpClientInputs = getHttpClientInputs("someUser", "credentials", "", "",
                 "", "", "", "", "", "",
                 "", "", "", "", "", "", "GET");
@@ -280,7 +280,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testFailOverNodeSuccess() throws MalformedURLException {
+    public void testFailOverNodeSuccess() {
         httpClientInputs = getHttpClientInputs("someUser", "credentials", "", "",
                 "", "", "", "", "", "",
                 "", "", "", "", "", "", "POST");
@@ -297,7 +297,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testGracefulFailOverNodeSuccess() throws MalformedURLException {
+    public void testGracefulFailOverNodeSuccess() {
         httpClientInputs = getHttpClientInputs("someUser", "credentials", "", "",
                 "", "", "", "", "", "",
                 "", "", "", "", "", "", "POST");
@@ -314,7 +314,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testRebalancingNodes() throws MalformedURLException {
+    public void testRebalancingNodes() {
         httpClientInputs = getHttpClientInputs("someUser", "credentials", "", "",
                 "", "", "", "", "", "",
                 "", "", "", "", "", "", "POST");
@@ -342,7 +342,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testSetRecoveryTypes() throws MalformedURLException {
+    public void testSetRecoveryTypes() {
         httpClientInputs = getHttpClientInputs("someUser", "credentials", "", "",
                 "", "", "", "", "", "",
                 "", "", "", "", "", "", "POST");
@@ -361,7 +361,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testFailOverNodeNoIPv4Address() throws MalformedURLException {
+    public void testFailOverNodeNoIPv4Address() {
         setExpectedExceptions(RuntimeException.class, exception, "The value of: [ blah blah blah ] input as part " +
                 "of: [ns_2@ blah blah blah ] input must be a valid IPv4 address.");
 
@@ -373,7 +373,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testFailOverNodeInvalidInternalNodeIpAddress() throws MalformedURLException {
+    public void testFailOverNodeInvalidInternalNodeIpAddress() {
         setExpectedExceptions(RuntimeException.class, exception, "The provided value for: " +
                 "[ anything here but not [at] symbol ] input must be a valid Couchbase internal node format.");
 
@@ -385,7 +385,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testUnknownApi() throws MalformedURLException {
+    public void testUnknownApi() {
         setExpectedExceptions(RuntimeException.class, exception, "Unsupported Couchbase API.");
 
         httpClientInputs = getHttpClientInputs("someUser", "credentials", "", "",
@@ -400,7 +400,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testUnknownBuilderType() throws MalformedURLException {
+    public void testUnknownBuilderType() {
         setExpectedExceptions(RuntimeException.class, exception, "Unknown builder type.");
 
         httpClientInputs = getHttpClientInputs("someUser", "credentials", "proxy.example.com", "8080",
@@ -415,7 +415,7 @@ public class CouchbaseServiceTest {
     }
 
     @Test
-    public void testGetDestinationClusterReference() throws MalformedURLException {
+    public void testGetDestinationClusterReference() {
         httpClientInputs = getHttpClientInputs("anonymous", "credentials", "", "",
                 "", "", "", "", "", "", "", "", "", "", "", "", "GET");
         CommonInputs commonInputs = getCommonInputs("GetDestinationClusterReference", "cluster", "http://somewhere.couchbase.com:8091");

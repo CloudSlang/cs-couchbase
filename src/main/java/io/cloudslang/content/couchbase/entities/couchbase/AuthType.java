@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static io.cloudslang.content.couchbase.utils.InputsUtil.getEnumValues;
+import static io.cloudslang.content.couchbase.utils.InputsUtil.buildErrorMessage;
 import static java.lang.String.format;
 import static java.util.Arrays.stream;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -44,8 +44,7 @@ public enum AuthType {
     private static final Map<String, String> AUTH_TYPE_MAP = new HashMap<>();
 
     static {
-        stream(values())
-                .forEach(authType -> AUTH_TYPE_MAP.put(authType.name().toLowerCase(), authType.getValue()));
+        stream(values()).forEach(entry -> AUTH_TYPE_MAP.put(entry.name().toLowerCase(), entry.getValue()));
     }
 
     private final String value;
@@ -63,6 +62,6 @@ public enum AuthType {
                 Optional
                         .ofNullable(AUTH_TYPE_MAP.get(input))
                         .orElseThrow(() -> new RuntimeException(format("Invalid Couchbase bucket authorization type value: '%s'. Valid values: '%s'.",
-                                input, getEnumValues(AuthType.class))));
+                                input, buildErrorMessage(AuthType.class))));
     }
 }

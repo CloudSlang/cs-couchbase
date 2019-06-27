@@ -46,8 +46,7 @@ public enum NodesUri {
     private static final Map<String, String> NODES_URI_MAP = new HashMap<>();
 
     static {
-        stream(values())
-                .forEach(nodeUri -> NODES_URI_MAP.put(nodeUri.getKey(), nodeUri.getNodesUriValue()));
+        stream(values()).forEach(entry -> NODES_URI_MAP.put(entry.getKey(), entry.getValue()));
     }
 
     NodesUri(String key, String value) {
@@ -65,7 +64,7 @@ public enum NodesUri {
         return key;
     }
 
-    private String getNodesUriValue() {
+    private String getValue() {
         return value;
     }
 }

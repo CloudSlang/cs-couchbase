@@ -45,9 +45,7 @@ public class BucketsUriFactory {
         String action = wrapper.getCommonInputs().getAction();
         switch (action) {
             case GET_BUCKET:
-                return BUCKETS + SLASH + wrapper.getBucketInputs().getBucketName();
             case GET_BUCKET_STATISTICS:
-                return BUCKETS + SLASH + wrapper.getBucketInputs().getBucketName();
             case DELETE_BUCKET:
                 return BUCKETS + SLASH + wrapper.getBucketInputs().getBucketName();
             default:

@@ -32,7 +32,7 @@ public class ClusterInputs {
     private final String ejectedNodes;
     private final String knownNodes;
 
-    private ClusterInputs(ClusterInputs.Builder builder) {
+    private ClusterInputs(Builder builder) {
         this.ejectedNodes = builder.ejectedNodes;
         this.knownNodes = builder.knownNodes;
     }
@@ -53,12 +53,12 @@ public class ClusterInputs {
             return new ClusterInputs(this);
         }
 
-        public ClusterInputs.Builder withEjectedNodes(String inputValue) {
+        public Builder withEjectedNodes(String inputValue) {
             ejectedNodes = inputValue;
             return this;
         }
 
-        public ClusterInputs.Builder withKnownNodes(String inputValue) {
+        public Builder withKnownNodes(String inputValue) {
             knownNodes = inputValue;
             return this;
         }

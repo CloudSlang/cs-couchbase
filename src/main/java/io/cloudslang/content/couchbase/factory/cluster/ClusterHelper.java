@@ -36,7 +36,7 @@ import static io.cloudslang.content.couchbase.entities.constants.Inputs.ClusterI
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getPayloadString;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.setOptionalMapEntry;
 import static io.cloudslang.content.couchbase.validators.Validators.validateNotBothBlankInputs;
-import static io.cloudslang.content.couchbase.validators.Validators.validateRebalancingNodesPayloadInputs;
+import static io.cloudslang.content.couchbase.validators.Validators.validateRebalancedNodesPayloadInputs;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
@@ -54,8 +54,8 @@ public class ClusterHelper {
         validateNotBothBlankInputs(ejectedNodesString, knownNodesString, EJECTED_NODES, KNOWN_NODES);
 
         String delimiter = wrapper.getCommonInputs().getDelimiter();
-        validateRebalancingNodesPayloadInputs(ejectedNodesString, delimiter);
-        validateRebalancingNodesPayloadInputs(knownNodesString, delimiter);
+        validateRebalancedNodesPayloadInputs(ejectedNodesString, delimiter);
+        validateRebalancedNodesPayloadInputs(knownNodesString, delimiter);
 
         Map<String, String> payloadMap = new HashMap<>();
         setOptionalMapEntry(payloadMap, EJECTED_NODES, wrapper.getClusterInputs().getEjectedNodes(),

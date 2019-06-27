@@ -34,20 +34,14 @@ public class Constants {
         // prevent instantiation
     }
 
-    public static class Api {
+    public class Api {
         public static final String BUCKETS = "buckets";
         public static final String CLUSTER = "cluster";
         public static final String NODES = "nodes";
         public static final String VIEWS = "views";
     }
 
-    public static class HttpClientInputsValues {
-        public static final String ALL_TYPE_HEADER = "Accept:application/json, text/plain, */*";
-        public static final String FORM_URL_ENCODED = "application/x-www-form-urlencoded; charset=UTF-8";
-        public static final String X_MEMCACHEKV_STORE_CLIENT_SPECIFICATION_VERSION_0_1 = "X-memcachekv-Store-Client-Specification-Version:0.1";
-    }
-
-    public static class BucketActions {
+    public class BucketActions {
         public static final String CREATE_OR_EDIT_BUCKET = "CreateOrEditBucket";
         public static final String DELETE_BUCKET = "DeleteBucket";
         public static final String GET_ALL_BUCKETS = "GetAllBuckets";
@@ -55,7 +49,7 @@ public class Constants {
         public static final String GET_BUCKET_STATISTICS = "GetBucketStatistics";
     }
 
-    public static class ClusterActions {
+    public class ClusterActions {
         public static final String GET_AUTO_FAILOVER_SETTINGS = "GetAutoFailOverSettings";
         public static final String GET_CLUSTER_DETAILS = "GetClusterDetails";
         public static final String GET_CLUSTER_INFO = "GetClusterInfo";
@@ -63,17 +57,7 @@ public class Constants {
         public static final String REBALANCING_NODES = "RebalancingNodes";
     }
 
-    public static class NodeActions {
-        public static final String FAIL_OVER_NODE = "FailOverNode";
-        public static final String GRACEFUL_FAIL_OVER_NODE = "GracefulFailOverNode";
-        public static final String SET_RECOVERY_TYPE = "SetRecoveryType";
-    }
-
-    public static class ViewsActions {
-        public static final String GET_DESIGN_DOCS_INFO = "GetDesignDocsInfo";
-    }
-
-    public static class ErrorMessages {
+    public class ErrorMessages {
         public static final String CONSTRAINS_ERROR_MESSAGE = "The value doesn't meet conditions for general purpose usage. " +
                 "See operation inputs description section for details.";
         public static final String UNKNOWN_BUILDER_TYPE = "Unknown builder type.";
@@ -83,7 +67,13 @@ public class Constants {
                 "authType, proxyPort and/or saslPassword doesn't meet conditions for general purpose usage.";
     }
 
-    public static class Miscellaneous {
+    public class HttpClientInputsValues {
+        public static final String ALL_TYPE_HEADER = "Accept:application/json, text/plain, */*";
+        public static final String FORM_URL_ENCODED = "application/x-www-form-urlencoded; charset=UTF-8";
+        public static final String X_MEMCACHEKV_STORE_CLIENT_SPECIFICATION_VERSION_0_1 = "X-memcachekv-Store-Client-Specification-Version:0.1";
+    }
+
+    public class Miscellaneous {
         public static final String ALLOW_ALL = "allow_all";
         public static final String AMPERSAND = "&";
         public static final String AT = "@";
@@ -94,7 +84,13 @@ public class Constants {
         public static final String SLASH = "/";
     }
 
-    public static class Values {
+    public class NodeActions {
+        public static final String FAIL_OVER_NODE = "FailOverNode";
+        public static final String GRACEFUL_FAIL_OVER_NODE = "GracefulFailOverNode";
+        public static final String SET_RECOVERY_TYPE = "SetRecoveryType";
+    }
+
+    public class Values {
         public static final int COUCHBASE_DEFAULT_PROXY_PORT = 11215;
         public static final int DEFAULT_REPLICA_NUMBER = 1;
         public static final int DEFAULT_THREADS_NUMBER = 2;
@@ -103,5 +99,10 @@ public class Constants {
         public static final int MAXIMUM_THREADS_NUMBER = 8;
         public static final int MINIMUM_RAM_QUOTA_AMOUNT = 100;
         public static final int MINIMUM_THREADS_NUMBER = 2;
+        public static final int THREADS_NUMBER = 10;
+    }
+
+    public class ViewsActions {
+        public static final String GET_DESIGN_DOCS_INFO = "GetDesignDocsInfo";
     }
 }

@@ -44,6 +44,7 @@
         <commons-validator.version>1.6</commons-validator.version>
         <cs-http-client.version>0.1.73</cs-http-client.version>
         <cs-commons.version>0.0.6</cs-commons.version>
+        <io-vavr.version>0.10.0</io-vavr.version>
         <!--Testing dependencies-->
         <mockito-all.version>1.10.19</mockito-all.version>
         <powermock.version>1.7.4</powermock.version>
@@ -116,6 +117,11 @@
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
             <version>${commons-validator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.vavr</groupId>
+            <artifactId>vavr</artifactId>
+            <version>${io-vavr.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

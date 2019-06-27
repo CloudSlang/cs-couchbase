@@ -62,7 +62,7 @@ public class BucketInputs {
     private final Integer replicaNumber;
     private final Integer threadsNumber;
 
-    private BucketInputs(BucketInputs.Builder builder) {
+    private BucketInputs(Builder builder) {
         this.authType = builder.authType;
         this.bucketName = builder.bucketName;
         this.bucketType = builder.bucketType;
@@ -151,67 +151,67 @@ public class BucketInputs {
             return new BucketInputs(this);
         }
 
-        public BucketInputs.Builder withAuthType(String input) {
+        public Builder withAuthType(String input) {
             authType = getAuthTypeValue(input);
             return this;
         }
 
-        public BucketInputs.Builder withBucketName(String input) {
+        public Builder withBucketName(String input) {
             bucketName = input;
             return this;
         }
 
-        public BucketInputs.Builder withBucketType(String input) {
+        public Builder withBucketType(String input) {
             bucketType = getBucketTypeValue(input);
             return this;
         }
 
-        public BucketInputs.Builder withConflictResolutionType(String input) {
+        public Builder withConflictResolutionType(String input) {
             conflictResolutionType = getConflictResolutionTypeValue(input);
             return this;
         }
 
-        public BucketInputs.Builder withEvictionPolicy(String input) {
+        public Builder withEvictionPolicy(String input) {
             evictionPolicy = getEvictionPolicyValue(input);
             return this;
         }
 
-        public BucketInputs.Builder withFlushEnabled(String input) {
+        public Builder withFlushEnabled(String input) {
             flushEnabled = getEnabledString(input, false);
             return this;
         }
 
-        public BucketInputs.Builder withParallelDBAndViewCompaction(String input) {
+        public Builder withParallelDBAndViewCompaction(String input) {
             parallelDBAndViewCompaction = valueOf(getEnforcedBooleanCondition(input, FALSE));
             return this;
         }
 
-        public BucketInputs.Builder withReplicaIndex(String input) {
+        public Builder withReplicaIndex(String input) {
             replicaIndex = getEnabledString(input, true);
             return this;
         }
 
-        public BucketInputs.Builder withProxyPort(String input) {
+        public Builder withProxyPort(String input) {
             proxyPort = getValidPort(input);
             return this;
         }
 
-        public BucketInputs.Builder withRamQuotaMB(String input) {
+        public Builder withRamQuotaMB(String input) {
             ramQuotaMB = getValidIntValue(input, MINIMUM_RAM_QUOTA_AMOUNT, null, MINIMUM_RAM_QUOTA_AMOUNT);
             return this;
         }
 
-        public BucketInputs.Builder withReplicaNumber(String input) {
+        public Builder withReplicaNumber(String input) {
             replicaNumber = getValidIntValue(input, INIT_INDEX, MAXIMUM_REPLICA_NUMBER, DEFAULT_REPLICA_NUMBER);
             return this;
         }
 
-        public BucketInputs.Builder withSaslPassword(String input) {
+        public Builder withSaslPassword(String input) {
             saslPassword = input;
             return this;
         }
 
-        public BucketInputs.Builder withThreadsNumber(String input) {
+        public Builder withThreadsNumber(String input) {
             threadsNumber = getValidIntValue(input, MINIMUM_THREADS_NUMBER, MAXIMUM_THREADS_NUMBER, DEFAULT_THREADS_NUMBER);
             return this;
         }

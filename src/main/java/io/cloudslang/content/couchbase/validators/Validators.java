@@ -23,24 +23,21 @@
  */
 package io.cloudslang.content.couchbase.validators;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.InetAddressValidator;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Map;
+import java.util.Optional;
 
 import static io.cloudslang.content.couchbase.entities.constants.Constants.ErrorMessages.CONSTRAINS_ERROR_MESSAGE;
-import static io.cloudslang.content.couchbase.entities.constants.Constants.ErrorMessages.INPUTS_COMBINATION_ERROR_MESSAGE;
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Miscellaneous.AT;
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Miscellaneous.PORT_REGEX;
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Values.COUCHBASE_DEFAULT_PROXY_PORT;
-import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.SASL_PASSWORD;
-import static io.cloudslang.content.couchbase.entities.couchbase.AuthType.SASL;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getIntegerAboveMinimum;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getIntegerWithinValidRange;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getStringsArray;
 import static java.lang.Integer.parseInt;
 import static java.lang.String.format;
+import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static java.util.regex.Pattern.compile;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -68,8 +65,14 @@ public class Validators {
     }
 
     public static int getValidIntValue(String input, Integer minAllowed, Integer maxAllowed, Integer defaultValue) {
-        return isBlank(input) ? defaultValue : maxAllowed == null ?
-                getIntegerAboveMinimum(input, minAllowed) : getIntegerWithinValidRange(input, minAllowed, maxAllowed);
+        return Optional
+                .ofNullable(input)
+                .filter(StringUtils::isNotEmpty)
+                .map(i -> Optional
+                        .ofNullable(maxAllowed)
+                        .map(inner -> getIntegerWithinValidRange(input, minAllowed, maxAllowed))
+                        .orElse(getIntegerAboveMinimum(input, minAllowed)))
+                .orElse(defaultValue);
     }
 
     public static String getValidInternalNodeIpAddress(String input) {
@@ -85,27 +88,20 @@ public class Validators {
         }
     }
 
-    public static void validateRebalancingNodesPayloadInputs(String input, String delimiter) {
+    public static void validateRebalancedNodesPayloadInputs(String input, String delimiter) {
         String[] nodesArray = getStringsArray(input, delimiter);
-        if (nodesArray != null) {
-            for (String node : nodesArray) {
-                validateClusterInternalNodeFormat(node);
-            }
-        }
+
+        Optional
+                .ofNullable(nodesArray)
+                .ifPresent(validate -> stream(nodesArray)
+                        .forEach(Validators::validateClusterInternalNodeFormat));
     }
 
-    public static void validateAuthType(Map<String, String> getPayloadMap, String authType) {
-        if (SASL.getValue().equals(authType) && !getPayloadMap.containsKey(SASL_PASSWORD)) {
-            throw new RuntimeException(INPUTS_COMBINATION_ERROR_MESSAGE);
-        }
-    }
-
-    public static String getValidOrDefaultValue(String input, String defaultValue, String[] validValues) {
-        return isNotBlank(input) && stream(validValues).anyMatch(filter -> filter.contains(input)) ? input : defaultValue;
-    }
-
-    public static String getValidUrl(String input) throws MalformedURLException {
-        return new URL(input).toString();
+    public static boolean isValidBoolean(String parameter) {
+        return Optional
+                .ofNullable(parameter)
+                .map(b -> asList(new String[]{"true", "false"}).contains(parameter))
+                .orElse(false);
     }
 
     private static void validateClusterInternalNodeFormat(String input) {
