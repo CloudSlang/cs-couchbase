@@ -44,6 +44,7 @@ public class Constants {
     public class BucketActions {
         public static final String CREATE_OR_EDIT_BUCKET = "CreateOrEditBucket";
         public static final String DELETE_BUCKET = "DeleteBucket";
+        public static final String FLUSH_BUCKET = "FlushBucket";
         public static final String GET_ALL_BUCKETS = "GetAllBuckets";
         public static final String GET_BUCKET = "GetBucket";
         public static final String GET_BUCKET_STATISTICS = "GetBucketStatistics";

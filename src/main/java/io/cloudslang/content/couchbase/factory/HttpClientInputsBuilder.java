@@ -38,7 +38,6 @@ import static java.lang.Integer.parseInt;
 import static java.lang.String.valueOf;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Arrays.stream;
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 public class HttpClientInputsBuilder {
     private static final String[] x509HostnameVerifierValidValuesArray = new String[]{"allow_all", "browser_compatible", "strict"};
@@ -125,22 +124,27 @@ public class HttpClientInputsBuilder {
         return keepAlive;
     }
 
-    public HttpClientInputs getHttpClientInputs(String methodName, String proxyHost, String proxyPort, String proxyUsername,
-                                                String proxyPassword) {
+    public HttpClientInputs buildHttpClientInputs(String methodName, String proxyHost, String proxyPort,
+                                                  String proxyUsername, String proxyPassword) {
         httpClientInputs.setMethod(methodName);
 
-        if (isNotBlank(proxyUsername)) {
-            httpClientInputs.setProxyUsername(proxyUsername);
-        }
+        Optional
+                .ofNullable(proxyUsername)
+                .filter(StringUtils::isNotEmpty)
+                .ifPresent(set -> httpClientInputs.setProxyUsername(proxyUsername));
 
-        if (areBothValuesPresent(proxyUsername, proxyPassword)) {
-            httpClientInputs.setProxyPassword(proxyPassword);
-        }
+        Optional
+                .ofNullable(proxyPassword)
+                .filter(f -> areBothValuesPresent(proxyUsername, proxyPassword))
+                .ifPresent(set -> httpClientInputs.setProxyPassword(proxyPassword));
 
-        if (areBothValuesPresent(proxyHost, proxyPort)) {
-            httpClientInputs.setProxyHost(proxyHost);
-            httpClientInputs.setProxyPort(proxyPort);
-        }
+        Optional
+                .ofNullable(proxyHost)
+                .filter(f -> areBothValuesPresent(proxyHost, proxyPort))
+                .ifPresent(set -> {
+                    httpClientInputs.setProxyHost(proxyHost);
+                    httpClientInputs.setProxyPort(proxyPort);
+                });
 
         return httpClientInputs;
     }
@@ -199,14 +203,24 @@ public class HttpClientInputsBuilder {
         }
 
         public Builder withConnectTimeout(String inputValue) {
-            this.connectTimeout = valueOf(isValidInt(inputValue, 0, MAX_VALUE) ? parseInt(inputValue) : 0);
+            this.connectTimeout = valueOf(Optional
+                    .ofNullable(inputValue)
+                    .filter(f -> isValidInt(inputValue, 0, MAX_VALUE))
+                    .map(i -> parseInt(inputValue))
+                    .orElse(0));
+
             httpClientInputs.setConnectTimeout(connectTimeout);
 
             return this;
         }
 
         public Builder withSocketTimeout(String inputValue) {
-            this.socketTimeout = valueOf(isValidInt(inputValue, 0, MAX_VALUE) ? parseInt(inputValue) : 0);
+            this.socketTimeout = valueOf(Optional
+                    .ofNullable(inputValue)
+                    .filter(f -> isValidInt(inputValue, 0, MAX_VALUE))
+                    .map(i -> parseInt(inputValue))
+                    .orElse(0));
+
             httpClientInputs.setSocketTimeout(socketTimeout);
 
             return this;
@@ -228,36 +242,44 @@ public class HttpClientInputsBuilder {
 
         public Builder withTrustKeystore(String inputValue) {
             this.trustKeystore = inputValue;
-            if (isNotBlank(trustKeystore)) {
-                httpClientInputs.setTrustKeystore(trustKeystore);
-            }
+
+            Optional
+                    .ofNullable(trustKeystore)
+                    .filter(StringUtils::isNotEmpty)
+                    .ifPresent(set -> httpClientInputs.setTrustKeystore(trustKeystore));
 
             return this;
         }
 
         public Builder withTrustPassword(String inputValue) {
             this.trustPassword = inputValue;
-            if (isNotBlank(trustPassword)) {
-                httpClientInputs.setTrustPassword(trustPassword);
-            }
+
+            Optional
+                    .ofNullable(trustPassword)
+                    .filter(StringUtils::isNotEmpty)
+                    .ifPresent(set -> httpClientInputs.setTrustPassword(trustPassword));
 
             return this;
         }
 
         public Builder withKeystore(String inputValue) {
             this.keystore = inputValue;
-            if (isNotBlank(keystore)) {
-                httpClientInputs.setKeystore(keystore);
-            }
+
+            Optional
+                    .ofNullable(keystore)
+                    .filter(StringUtils::isNotEmpty)
+                    .ifPresent(set -> httpClientInputs.setKeystore(keystore));
 
             return this;
         }
 
         public Builder withKeystorePassword(String inputValue) {
             this.keystorePassword = inputValue;
-            if (isNotBlank(keystorePassword)) {
-                httpClientInputs.setKeystorePassword(keystorePassword);
-            }
+
+            Optional
+                    .ofNullable(keystorePassword)
+                    .filter(StringUtils::isNotEmpty)
+                    .ifPresent(set -> httpClientInputs.setKeystorePassword(keystorePassword));
 
             return this;
         }

@@ -194,7 +194,7 @@ public class GetDestinationClusterReference {
                     .build();
 
             final HttpClientInputs httpClientInputs = httpClientInputsBuilder
-                    .getHttpClientInputs(HttpGet.METHOD_NAME, proxyHost, proxyPort, proxyUsername, proxyPassword);
+                    .buildHttpClientInputs(HttpGet.METHOD_NAME, proxyHost, proxyPort, proxyUsername, proxyPassword);
 
             final CommonInputs commonInputs = new CommonInputs.Builder()
                     .withAction(GET_DESTINATION_CLUSTER_REFERENCE)

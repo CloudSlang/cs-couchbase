@@ -193,7 +193,7 @@ public class DeleteBucket {
                     .build();
 
             final HttpClientInputs httpClientInputs = httpClientInputsBuilder
-                    .getHttpClientInputs(HttpDelete.METHOD_NAME, proxyHost, proxyPort, proxyUsername, proxyPassword);
+                    .buildHttpClientInputs(HttpDelete.METHOD_NAME, proxyHost, proxyPort, proxyUsername, proxyPassword);
 
             final CommonInputs commonInputs = new CommonInputs.Builder()
                     .withAction(DELETE_BUCKET)

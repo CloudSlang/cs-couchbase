@@ -193,7 +193,7 @@ public class SetRecoveryType {
                     .build();
 
             final HttpClientInputs httpClientInputs = httpClientInputsBuilder
-                    .getHttpClientInputs(HttpPost.METHOD_NAME, proxyHost, proxyPort, proxyUsername, proxyPassword);
+                    .buildHttpClientInputs(HttpPost.METHOD_NAME, proxyHost, proxyPort, proxyUsername, proxyPassword);
 
             final CommonInputs commonInputs = new CommonInputs.Builder()
                     .withAction(SET_RECOVERY_TYPE)

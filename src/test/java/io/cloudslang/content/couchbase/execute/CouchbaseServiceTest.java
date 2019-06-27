@@ -40,7 +40,6 @@ import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.net.MalformedURLException;
 import java.util.HashMap;
 
 import static io.cloudslang.content.couchbase.utils.TestUtils.setExpectedExceptions;
@@ -163,6 +162,22 @@ public class CouchbaseServiceTest {
         verifyNoMoreInteractions(csHttpClientMock);
 
         assertEquals("http://anywhere.couchbase.com:8091/pools/default/buckets/toBeDeletedBucket", httpClientInputs.getUrl());
+        assertEquals("application/json", httpClientInputs.getContentType());
+    }
+
+    @Test
+    public void testFlushBucket() {
+        httpClientInputs = getHttpClientInputs("someUser", "credentials", "", "",
+                "", "", "", "", "", "",
+                "", "", "", "", "", "", "POST");
+        CommonInputs commonInputs = getCommonInputs("FlushBucket", "buckets", "http://anywhere.couchbase.com:8091");
+        BucketInputs bucketInputs = new BucketInputs.Builder().withBucketName("toBeFlushedBucket").build();
+        toTest.execute(httpClientInputs, commonInputs, bucketInputs);
+
+        verify(csHttpClientMock, times(1)).execute(eq(httpClientInputs));
+        verifyNoMoreInteractions(csHttpClientMock);
+
+        assertEquals("http://anywhere.couchbase.com:8091/pools/default/buckets/toBeFlushedBucket/controller/doFlush", httpClientInputs.getUrl());
         assertEquals("application/json", httpClientInputs.getContentType());
     }
 
@@ -467,7 +482,7 @@ public class CouchbaseServiceTest {
                 .build();
 
         return httpClientInputsBuilder
-                .getHttpClientInputs(method, proxyHost, proxyPort, proxyUsername, proxyPassword);
+                .buildHttpClientInputs(method, proxyHost, proxyPort, proxyUsername, proxyPassword);
     }
 
 }

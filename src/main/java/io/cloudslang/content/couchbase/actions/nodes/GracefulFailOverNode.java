@@ -186,7 +186,7 @@ public class GracefulFailOverNode {
                     .build();
 
             final HttpClientInputs httpClientInputs = httpClientInputsBuilder
-                    .getHttpClientInputs(HttpPost.METHOD_NAME, proxyHost, proxyPort, proxyUsername, proxyPassword);
+                    .buildHttpClientInputs(HttpPost.METHOD_NAME, proxyHost, proxyPort, proxyUsername, proxyPassword);
 
             final CommonInputs commonInputs = new CommonInputs.Builder()
                     .withAction(GRACEFUL_FAIL_OVER_NODE)

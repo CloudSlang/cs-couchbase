@@ -264,7 +264,7 @@ public class CreateOrEditBucket {
                     .build();
 
             final HttpClientInputs httpClientInputs = httpClientInputsBuilder
-                    .getHttpClientInputs(METHOD_NAME, proxyHost, proxyPort, proxyUsername, proxyPassword);
+                    .buildHttpClientInputs(METHOD_NAME, proxyHost, proxyPort, proxyUsername, proxyPassword);
 
             final CommonInputs commonInputs = new CommonInputs.Builder()
                     .withAction(CREATE_OR_EDIT_BUCKET)
