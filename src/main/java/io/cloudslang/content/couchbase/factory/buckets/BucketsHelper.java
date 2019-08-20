@@ -46,8 +46,8 @@ import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketIn
 import static io.cloudslang.content.couchbase.entities.couchbase.AuthType.SASL;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getPayloadString;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.setOptionalMapEntry;
-import static io.cloudslang.content.httpclient.HttpClientInputs.AUTH_TYPE;
-import static io.cloudslang.content.httpclient.HttpClientInputs.PROXY_PORT;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.AUTH_TYPE;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.PROXY_PORT;
 import static java.lang.String.valueOf;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 

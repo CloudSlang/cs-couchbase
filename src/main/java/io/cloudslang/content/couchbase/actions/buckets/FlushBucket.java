@@ -1,3 +1,12 @@
+/*
+ * (c) Copyright 2017 Hewlett-Packard Enterprise Development Company, L.P.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Apache License v2.0 which accompany this distribution.
+ *
+ * The Apache License is available at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ */
 package io.cloudslang.content.couchbase.actions.buckets;
 
 import com.hp.oo.sdk.content.annotations.Action;
@@ -11,7 +20,7 @@ import io.cloudslang.content.couchbase.entities.inputs.BucketInputs;
 import io.cloudslang.content.couchbase.entities.inputs.CommonInputs;
 import io.cloudslang.content.couchbase.execute.CouchbaseService;
 import io.cloudslang.content.couchbase.factory.HttpClientInputsBuilder;
-import io.cloudslang.content.httpclient.HttpClientInputs;
+import io.cloudslang.content.httpclient.entities.HttpClientInputs;
 import org.apache.http.client.methods.HttpPost;
 
 import java.util.Map;
@@ -25,22 +34,22 @@ import static io.cloudslang.content.couchbase.entities.constants.Constants.Api.B
 import static io.cloudslang.content.couchbase.entities.constants.Constants.BucketActions.FLUSH_BUCKET;
 import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.BUCKET_NAME;
 import static io.cloudslang.content.couchbase.entities.constants.Inputs.CommonInputs.ENDPOINT;
-import static io.cloudslang.content.httpclient.HttpClientInputs.CONNECT_TIMEOUT;
-import static io.cloudslang.content.httpclient.HttpClientInputs.KEEP_ALIVE;
-import static io.cloudslang.content.httpclient.HttpClientInputs.KEYSTORE;
-import static io.cloudslang.content.httpclient.HttpClientInputs.KEYSTORE_PASSWORD;
-import static io.cloudslang.content.httpclient.HttpClientInputs.PASSWORD;
-import static io.cloudslang.content.httpclient.HttpClientInputs.PROXY_HOST;
-import static io.cloudslang.content.httpclient.HttpClientInputs.PROXY_PASSWORD;
-import static io.cloudslang.content.httpclient.HttpClientInputs.PROXY_PORT;
-import static io.cloudslang.content.httpclient.HttpClientInputs.PROXY_USERNAME;
-import static io.cloudslang.content.httpclient.HttpClientInputs.SOCKET_TIMEOUT;
-import static io.cloudslang.content.httpclient.HttpClientInputs.TRUST_ALL_ROOTS;
-import static io.cloudslang.content.httpclient.HttpClientInputs.TRUST_KEYSTORE;
-import static io.cloudslang.content.httpclient.HttpClientInputs.TRUST_PASSWORD;
-import static io.cloudslang.content.httpclient.HttpClientInputs.USERNAME;
-import static io.cloudslang.content.httpclient.HttpClientInputs.USE_COOKIES;
-import static io.cloudslang.content.httpclient.HttpClientInputs.X509_HOSTNAME_VERIFIER;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.CONNECT_TIMEOUT;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.KEEP_ALIVE;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.KEYSTORE;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.KEYSTORE_PASSWORD;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.PASSWORD;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.PROXY_HOST;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.PROXY_PASSWORD;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.PROXY_PORT;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.PROXY_USERNAME;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.SOCKET_TIMEOUT;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.TRUST_ALL_ROOTS;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.TRUST_KEYSTORE;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.TRUST_PASSWORD;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.USERNAME;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.USE_COOKIES;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.X509_HOSTNAME_VERIFIER;
 import static io.cloudslang.content.utils.OutputUtilities.getFailureResultsMap;
 
 public class FlushBucket {

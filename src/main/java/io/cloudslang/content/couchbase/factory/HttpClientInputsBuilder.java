@@ -23,7 +23,7 @@
  */
 package io.cloudslang.content.couchbase.factory;
 
-import io.cloudslang.content.httpclient.HttpClientInputs;
+import io.cloudslang.content.httpclient.entities.HttpClientInputs;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Optional;

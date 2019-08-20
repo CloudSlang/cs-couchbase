@@ -26,8 +26,8 @@ package io.cloudslang.content.couchbase.execute;
 
 import io.cloudslang.content.couchbase.entities.inputs.CommonInputs;
 import io.cloudslang.content.couchbase.entities.inputs.InputsWrapper;
-import io.cloudslang.content.httpclient.CSHttpClient;
-import io.cloudslang.content.httpclient.HttpClientInputs;
+import io.cloudslang.content.httpclient.entities.HttpClientInputs;
+import io.cloudslang.content.httpclient.services.HttpClientService;
 import io.cloudslang.content.utils.OutputUtilities;
 import io.vavr.control.Try;
 
@@ -64,7 +64,7 @@ public class CouchbaseService {
 
     private Map<String, String> asyncCall(HttpClientInputs httpClientInputs) throws InterruptedException, ExecutionException {
         return CompletableFuture
-                .supplyAsync(() -> new CSHttpClient().execute(httpClientInputs), executorService)
+                .supplyAsync(() -> new HttpClientService().execute(httpClientInputs), executorService)
                 .exceptionally(OutputUtilities::getFailureResultsMap)
                 .get();
     }

@@ -29,12 +29,13 @@ import io.cloudslang.content.couchbase.entities.inputs.ClusterInputs;
 import io.cloudslang.content.couchbase.entities.inputs.CommonInputs;
 import io.cloudslang.content.couchbase.entities.inputs.InputsWrapper;
 import io.cloudslang.content.couchbase.entities.inputs.NodeInputs;
-import io.cloudslang.content.httpclient.HttpClientInputs;
+import io.cloudslang.content.httpclient.entities.HttpClientInputs;
 
 import java.util.Optional;
 
 import static io.cloudslang.content.couchbase.entities.constants.Constants.ErrorMessages.UNKNOWN_BUILDER_TYPE;
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Values.INIT_INDEX;
+
 
 /**
  * Created by Mihai Tusa
