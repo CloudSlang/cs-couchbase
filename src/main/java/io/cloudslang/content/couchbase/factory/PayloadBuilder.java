@@ -52,8 +52,6 @@ public class PayloadBuilder {
                     wrapper.getHttpClientInputs().setBody(new BucketsHelper().getCreateBucketPayload(wrapper));
                     break;
                 case FAIL_OVER_NODE:
-                    wrapper.getHttpClientInputs().setBody(new NodesHelper().getFailOverNodePayloadString(wrapper));
-                    break;
                 case GRACEFUL_FAIL_OVER_NODE:
                     wrapper.getHttpClientInputs().setBody(new NodesHelper().getFailOverNodePayloadString(wrapper));
                     break;

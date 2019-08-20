@@ -51,13 +51,7 @@ public class BucketHeadersBuilder {
                 wrapper.getHttpClientInputs().setContentType(FORM_URL_ENCODED);
                 break;
             case GET_ALL_BUCKETS:
-                wrapper.getHttpClientInputs().setHeaders(X_MEMCACHEKV_STORE_CLIENT_SPECIFICATION_VERSION_0_1);
-                wrapper.getHttpClientInputs().setContentType(APPLICATION_JSON.getMimeType());
-                break;
             case GET_BUCKET:
-                wrapper.getHttpClientInputs().setHeaders(X_MEMCACHEKV_STORE_CLIENT_SPECIFICATION_VERSION_0_1);
-                wrapper.getHttpClientInputs().setContentType(APPLICATION_JSON.getMimeType());
-                break;
             case GET_BUCKET_STATISTICS:
                 wrapper.getHttpClientInputs().setHeaders(X_MEMCACHEKV_STORE_CLIENT_SPECIFICATION_VERSION_0_1);
                 wrapper.getHttpClientInputs().setContentType(APPLICATION_JSON.getMimeType());

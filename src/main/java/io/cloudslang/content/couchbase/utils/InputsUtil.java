@@ -31,18 +31,24 @@ import io.cloudslang.content.couchbase.entities.couchbase.ConflictResolutionType
 import io.cloudslang.content.couchbase.entities.couchbase.EvictionPolicy;
 import io.cloudslang.content.couchbase.entities.couchbase.RecoveryType;
 import io.cloudslang.content.couchbase.entities.inputs.InputsWrapper;
+import io.cloudslang.content.httpclient.entities.HttpClientInputs;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
+import java.util.Optional;
 
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Miscellaneous.BLANK_SPACE;
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Miscellaneous.COMMA;
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Miscellaneous.SLASH;
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Values.INIT_INDEX;
 import static io.cloudslang.content.couchbase.entities.couchbase.SuffixUri.getSuffixUriValue;
+import static io.cloudslang.content.couchbase.factory.HeadersBuilder.buildHeaders;
+import static io.cloudslang.content.couchbase.factory.PayloadBuilder.buildPayload;
 import static io.cloudslang.content.couchbase.factory.UriFactory.getUri;
-import static io.cloudslang.content.couchbase.validators.Validators.getValidUrl;
+import static io.cloudslang.content.couchbase.validators.Validators.isValidBoolean;
 import static io.cloudslang.content.utils.NumberUtilities.isValidInt;
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
@@ -63,43 +69,56 @@ public class InputsUtil {
         // prevent instantiation
     }
 
-    public static String buildUrl(InputsWrapper wrapper) throws MalformedURLException {
-        return getValidUrl(wrapper.getCommonInputs().getEndpoint()) + getUri(wrapper);
+    public static void setupApiCall(HttpClientInputs httpClientInputs, InputsWrapper wrapper) throws MalformedURLException {
+        httpClientInputs.setUrl(buildUrl(wrapper));
+
+        buildHeaders(wrapper);
+        buildPayload(wrapper);
     }
 
     public static String appendTo(String prefix, String suffix, String action) {
-        return isBlank(suffix) ? prefix : prefix + SLASH + suffix + getSuffixUriValue(action);
+        return Optional
+                .ofNullable(suffix)
+                .filter(StringUtils::isNotEmpty)
+                .map(s -> prefix + SLASH + suffix + getSuffixUriValue(action))
+                .orElse(prefix);
     }
 
     public static String getPayloadString(Map<String, String> payloadMap, String separator, String suffix, boolean deleteLastChar) {
-        return payloadMap.isEmpty() ? EMPTY : buildPayloadString(payloadMap, separator, suffix, deleteLastChar);
+        return Optional
+                .of(payloadMap)
+                .filter(f -> !payloadMap.isEmpty())
+                .map(s -> buildPayloadString(payloadMap, separator, suffix, deleteLastChar))
+                .orElse(EMPTY);
     }
 
     public static String getEnabledString(String input, boolean enforcedBoolean) {
         return getEnforcedBooleanCondition(input, enforcedBoolean) ? valueOf(1) : valueOf(INIT_INDEX);
     }
 
-    public static String getInputWithDefaultValue(String input, String defaultValue) {
-        return isBlank(input) ? defaultValue : input;
-    }
-
     public static String[] getStringsArray(String input, String delimiter) {
-        return isBlank(input) ? null : split(input, delimiter);
+        return Optional
+                .ofNullable(input)
+                .filter(StringUtils::isNotEmpty)
+                .map(a -> split(input, delimiter))
+                .orElse(null);
     }
 
     public static int getIntegerWithinValidRange(String input, Integer minAllowed, Integer maxAllowed) {
-        if (isValidInt(input, minAllowed, maxAllowed, true, true)) {
-            return parseInt(input);
-        }
-
-        throw new RuntimeException(format("The provided value: %s is not within valid range. See operation inputs description section for details.", input));
+        return Optional
+                .of(input)
+                .filter(f -> isValidInt(input, minAllowed, maxAllowed, true, true))
+                .map(i -> parseInt(input))
+                .orElseThrow(() -> new RuntimeException(format("The provided value: %s is not within valid range. " +
+                        "See operation inputs description section for details.", input)));
     }
 
     public static int getIntegerAboveMinimum(String input, Integer minAllowed) {
         try {
             int validInt = parseInt(input);
             if (validInt < minAllowed) {
-                throw new RuntimeException(format("The provided value: %s is bellow minimum allowed. See operation inputs description section for details.", input));
+                throw new RuntimeException(format("The provided value: %s is bellow minimum allowed. " +
+                        "See operation inputs description section for details.", input));
             }
 
             return validInt;
@@ -122,11 +141,10 @@ public class InputsUtil {
      */
     public static boolean getEnforcedBooleanCondition(String input, boolean enforcedBoolean) {
         return enforcedBoolean ?
-                !isBlank(input) && stream(new String[]{"true", "false"})
-                        .anyMatch(b -> b.equalsIgnoreCase(input)) == parseBoolean(input) : parseBoolean(input);
+                !isBlank(input) && isValidBoolean(input) == parseBoolean(input) : parseBoolean(input);
     }
 
-    public static <T extends Enum<T>> String getEnumValues(Class<T> inputEnum) {
+    public static <T extends Enum<T>> String buildErrorMessage(Class<T> inputEnum) {
         StringBuilder sb = new StringBuilder();
         stream(inputEnum.getEnumConstants())
                 .forEach(enumValue -> {
@@ -145,7 +163,11 @@ public class InputsUtil {
                     }
                 });
 
-        return isBlank(sb.toString()) ? EMPTY : sb.deleteCharAt(sb.length() - 2).toString().trim();
+        return Optional
+                .of(sb.toString())
+                .filter(StringUtils::isNotEmpty)
+                .map(s -> sb.deleteCharAt(sb.length() - 2).toString().trim())
+                .orElse(EMPTY);
     }
 
     public static void setOptionalMapEntry(Map<String, String> inputMap, String key, String value, boolean condition) {
@@ -160,5 +182,9 @@ public class InputsUtil {
         payloadMap.forEach((key, value) -> sb.append(key).append(separator).append(value).append(suffix));
 
         return deleteLastChar ? sb.deleteCharAt(sb.length() - 1).toString() : sb.toString();
+    }
+
+    private static String buildUrl(InputsWrapper wrapper) throws MalformedURLException {
+        return new URL(wrapper.getCommonInputs().getEndpoint() + getUri(wrapper)).toString();
     }
 }

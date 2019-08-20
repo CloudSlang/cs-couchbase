@@ -35,7 +35,7 @@ public class NodeInputs {
     private final String internalNodeIpAddress;
     private final String recoveryType;
 
-    private NodeInputs(NodeInputs.Builder builder) {
+    private NodeInputs(Builder builder) {
         this.internalNodeIpAddress = builder.internalNodeIpAddress;
         this.recoveryType = builder.recoveryType;
     }
@@ -56,12 +56,12 @@ public class NodeInputs {
             return new NodeInputs(this);
         }
 
-        public NodeInputs.Builder withInternalNodeIpAddress(String inputValue) {
+        public Builder withInternalNodeIpAddress(String inputValue) {
             internalNodeIpAddress = getValidInternalNodeIpAddress(inputValue);
             return this;
         }
 
-        public NodeInputs.Builder withRecoveryType(String inputValue) {
+        public Builder withRecoveryType(String inputValue) {
             recoveryType = getRecoveryTypeValue(inputValue);
             return this;
         }

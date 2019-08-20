@@ -7,22 +7,7 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  */
-/*
- * (c) Copyright 2017 EntIT Software LLC, a Micro Focus company, L.P.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Apache License v2.0 which accompany this distribution.
- *
- * The Apache License is available at
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package io.cloudslang.content.couchbase.actions.cluster;
+package io.cloudslang.content.couchbase.actions.buckets;
 
 import com.hp.oo.sdk.content.annotations.Action;
 import com.hp.oo.sdk.content.annotations.Output;
@@ -31,11 +16,12 @@ import com.hp.oo.sdk.content.annotations.Response;
 import com.hp.oo.sdk.content.plugin.ActionMetadata.MatchType;
 import com.hp.oo.sdk.content.plugin.ActionMetadata.ResponseType;
 import io.cloudslang.content.constants.ReturnCodes;
+import io.cloudslang.content.couchbase.entities.inputs.BucketInputs;
 import io.cloudslang.content.couchbase.entities.inputs.CommonInputs;
 import io.cloudslang.content.couchbase.execute.CouchbaseService;
 import io.cloudslang.content.couchbase.factory.HttpClientInputsBuilder;
 import io.cloudslang.content.httpclient.entities.HttpClientInputs;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 
 import java.util.Map;
 
@@ -44,8 +30,9 @@ import static io.cloudslang.content.constants.OutputNames.RETURN_CODE;
 import static io.cloudslang.content.constants.OutputNames.RETURN_RESULT;
 import static io.cloudslang.content.constants.ResponseNames.FAILURE;
 import static io.cloudslang.content.constants.ResponseNames.SUCCESS;
-import static io.cloudslang.content.couchbase.entities.constants.Constants.Api.CLUSTER;
-import static io.cloudslang.content.couchbase.entities.constants.Constants.ClusterActions.GET_CLUSTER_INFO;
+import static io.cloudslang.content.couchbase.entities.constants.Constants.Api.BUCKETS;
+import static io.cloudslang.content.couchbase.entities.constants.Constants.BucketActions.FLUSH_BUCKET;
+import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.BUCKET_NAME;
 import static io.cloudslang.content.couchbase.entities.constants.Inputs.CommonInputs.ENDPOINT;
 import static io.cloudslang.content.httpclient.entities.HttpClientInputs.CONNECT_TIMEOUT;
 import static io.cloudslang.content.httpclient.entities.HttpClientInputs.KEEP_ALIVE;
@@ -65,14 +52,24 @@ import static io.cloudslang.content.httpclient.entities.HttpClientInputs.USE_COO
 import static io.cloudslang.content.httpclient.entities.HttpClientInputs.X509_HOSTNAME_VERIFIER;
 import static io.cloudslang.content.utils.OutputUtilities.getFailureResultsMap;
 
-/**
- * Created by TusaM
- * 4/20/2017.
- */
-public class GetClusterInfo {
+public class FlushBucket {
     /**
-     * Retrieves cluster information.
-     * https://developer.couchbase.com/documentation/server/4.6/rest-api/rest-cluster-get.html
+     * Empties the contents of the specified bucket, deleting all stored data..
+     * https://docs.couchbase.com/server/4.6/rest-api/rest-bucket-flush.html
+     * <p>
+     * Note:
+     * 1. The Flush Bucket operation succeeds only if flush was configured either during the initial bucket setup or after
+     * the bucket settings have been changed.
+     * 2. Parameters and payload data are ignored, but the request must including the authorization header if the system
+     * has been secured.
+     * 3. The flush request may lead to significant disk activity as the data in the bucket is deleted from the database.
+     * The high disk utilization may affect the performance of your server until the data has been successfully deleted.
+     * 4. The flush request is not transmitted over XDCR replication configurations. The remote bucket is not flushed.
+     * <p>
+     * Warning: It is recommended that the flush capability is not used in production systems as it irreversibly deletes
+     * every document in the bucket. Even for use cases where this is the desired behaviour, flushing is not recommended
+     * as it is a very disruptive process. You can control and limit the ability to flush individual buckets by setting
+     * the flushEnabled parameter on a bucket in the Couchbase Web Console.
      *
      * @param endpoint             Endpoint to which request will be sent. A valid endpoint will be formatted as it shows in
      *                             bellow example.
@@ -131,10 +128,11 @@ public class GetClusterInfo {
      *                             execution it will close it.
      *                             Valid values: "true", "false"
      *                             Default value: "true"
+     * @param bucketName           Name of the bucket to be deleted
      * @return A map with strings as keys and strings as values that contains: outcome of the action (or failure message
      * and the exception if there is one), returnCode of the operation and the ID of the request
      */
-    @Action(name = "Get Cluster Info",
+    @Action(name = "Flush Bucket",
             outputs = {
                     @Output(RETURN_CODE),
                     @Output(RETURN_RESULT),
@@ -162,7 +160,8 @@ public class GetClusterInfo {
                                        @Param(value = CONNECT_TIMEOUT) String connectTimeout,
                                        @Param(value = SOCKET_TIMEOUT) String socketTimeout,
                                        @Param(value = USE_COOKIES) String useCookies,
-                                       @Param(value = KEEP_ALIVE) String keepAlive) {
+                                       @Param(value = KEEP_ALIVE) String keepAlive,
+                                       @Param(value = BUCKET_NAME, required = true) String bucketName) {
         try {
             final HttpClientInputsBuilder httpClientInputsBuilder = new HttpClientInputsBuilder.Builder()
                     .withUsername(username)
@@ -180,15 +179,17 @@ public class GetClusterInfo {
                     .build();
 
             final HttpClientInputs httpClientInputs = httpClientInputsBuilder
-                    .buildHttpClientInputs(HttpGet.METHOD_NAME, proxyHost, proxyPort, proxyUsername, proxyPassword);
+                    .buildHttpClientInputs(HttpPost.METHOD_NAME, proxyHost, proxyPort, proxyUsername, proxyPassword);
 
             final CommonInputs commonInputs = new CommonInputs.Builder()
-                    .withAction(GET_CLUSTER_INFO)
-                    .withApi(CLUSTER)
+                    .withAction(FLUSH_BUCKET)
+                    .withApi(BUCKETS)
                     .withEndpoint(endpoint)
                     .build();
 
-            return new CouchbaseService().execute(httpClientInputs, commonInputs);
+            final BucketInputs bucketInputs = new BucketInputs.Builder().withBucketName(bucketName).build();
+
+            return new CouchbaseService().execute(httpClientInputs, commonInputs, bucketInputs);
         } catch (Exception exception) {
             return getFailureResultsMap(exception);
         }

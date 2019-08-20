@@ -42,8 +42,9 @@
         <!--Project dependencies-->
         <score-content-sdk.version>1.10.7</score-content-sdk.version>
         <commons-validator.version>1.6</commons-validator.version>
-        <cs-http-client.version>0.1.73</cs-http-client.version>
+        <cs-http-client.version>0.1.75</cs-http-client.version>
         <cs-commons.version>0.0.6</cs-commons.version>
+        <io-vavr.version>0.10.0</io-vavr.version>
         <!--Testing dependencies-->
         <mockito-all.version>1.10.19</mockito-all.version>
         <powermock.version>1.7.4</powermock.version>
@@ -116,6 +117,11 @@
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
             <version>${commons-validator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.vavr</groupId>
+            <artifactId>vavr</artifactId>
+            <version>${io-vavr.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -238,6 +244,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -253,8 +260,8 @@
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>${maven-gpg-plugin.version}</version>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.1</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>

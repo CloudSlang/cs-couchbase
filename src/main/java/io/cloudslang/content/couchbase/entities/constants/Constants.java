@@ -41,15 +41,10 @@ public class Constants {
         public static final String VIEWS = "views";
     }
 
-    public static class HttpClientInputsValues {
-        public static final String ALL_TYPE_HEADER = "Accept:application/json, text/plain, */*";
-        public static final String FORM_URL_ENCODED = "application/x-www-form-urlencoded; charset=UTF-8";
-        public static final String X_MEMCACHEKV_STORE_CLIENT_SPECIFICATION_VERSION_0_1 = "X-memcachekv-Store-Client-Specification-Version:0.1";
-    }
-
     public static class BucketActions {
         public static final String CREATE_OR_EDIT_BUCKET = "CreateOrEditBucket";
         public static final String DELETE_BUCKET = "DeleteBucket";
+        public static final String FLUSH_BUCKET = "FlushBucket";
         public static final String GET_ALL_BUCKETS = "GetAllBuckets";
         public static final String GET_BUCKET = "GetBucket";
         public static final String GET_BUCKET_STATISTICS = "GetBucketStatistics";
@@ -63,16 +58,6 @@ public class Constants {
         public static final String REBALANCING_NODES = "RebalancingNodes";
     }
 
-    public static class NodeActions {
-        public static final String FAIL_OVER_NODE = "FailOverNode";
-        public static final String GRACEFUL_FAIL_OVER_NODE = "GracefulFailOverNode";
-        public static final String SET_RECOVERY_TYPE = "SetRecoveryType";
-    }
-
-    public static class ViewsActions {
-        public static final String GET_DESIGN_DOCS_INFO = "GetDesignDocsInfo";
-    }
-
     public static class ErrorMessages {
         public static final String CONSTRAINS_ERROR_MESSAGE = "The value doesn't meet conditions for general purpose usage. " +
                 "See operation inputs description section for details.";
@@ -81,6 +66,12 @@ public class Constants {
         public static final String UNSUPPORTED_COUCHBASE_API = "Unsupported Couchbase API.";
         public static final String INPUTS_COMBINATION_ERROR_MESSAGE = "The combination of values supplied for inputs: " +
                 "authType, proxyPort and/or saslPassword doesn't meet conditions for general purpose usage.";
+    }
+
+    public static class HttpClientInputsValues {
+        public static final String ALL_TYPE_HEADER = "Accept:application/json, text/plain, */*";
+        public static final String FORM_URL_ENCODED = "application/x-www-form-urlencoded; charset=UTF-8";
+        public static final String X_MEMCACHEKV_STORE_CLIENT_SPECIFICATION_VERSION_0_1 = "X-memcachekv-Store-Client-Specification-Version:0.1";
     }
 
     public static class Miscellaneous {
@@ -94,6 +85,12 @@ public class Constants {
         public static final String SLASH = "/";
     }
 
+    public static class NodeActions {
+        public static final String FAIL_OVER_NODE = "FailOverNode";
+        public static final String GRACEFUL_FAIL_OVER_NODE = "GracefulFailOverNode";
+        public static final String SET_RECOVERY_TYPE = "SetRecoveryType";
+    }
+
     public static class Values {
         public static final int COUCHBASE_DEFAULT_PROXY_PORT = 11215;
         public static final int DEFAULT_REPLICA_NUMBER = 1;
@@ -103,5 +100,10 @@ public class Constants {
         public static final int MAXIMUM_THREADS_NUMBER = 8;
         public static final int MINIMUM_RAM_QUOTA_AMOUNT = 100;
         public static final int MINIMUM_THREADS_NUMBER = 2;
+        public static final int THREADS_NUMBER = 10;
+    }
+
+    public static class ViewsActions {
+        public static final String GET_DESIGN_DOCS_INFO = "GetDesignDocsInfo";
     }
 }

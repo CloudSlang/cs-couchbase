@@ -58,11 +58,10 @@ public class ClusterUriFactory {
             case GET_AUTO_FAILOVER_SETTINGS:
                 return SETTINGS.getValue() + AUTO_FAILOVER.getValue();
             case GET_CLUSTER_DETAILS:
+            case GET_DESTINATION_CLUSTER_REFERENCE:
                 return POOLS.getValue() + DEFAULT.getValue();
             case GET_CLUSTER_INFO:
                 return POOLS.getValue();
-            case GET_DESTINATION_CLUSTER_REFERENCE:
-                return POOLS.getValue() + DEFAULT.getValue();
             case REBALANCING_NODES:
                 return CONTROLLER.getValue();
             default:

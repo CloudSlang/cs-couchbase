@@ -51,14 +51,8 @@ public class ClusterHeadersBuilder {
                 wrapper.getHttpClientInputs().setContentType(FORM_URL_ENCODED);
                 break;
             case GET_CLUSTER_DETAILS:
-                wrapper.getHttpClientInputs().setHeaders(X_MEMCACHEKV_STORE_CLIENT_SPECIFICATION_VERSION_0_1);
-                wrapper.getHttpClientInputs().setContentType(APPLICATION_JSON.getMimeType());
-                break;
-            case GET_CLUSTER_INFO:
-                wrapper.getHttpClientInputs().setHeaders(X_MEMCACHEKV_STORE_CLIENT_SPECIFICATION_VERSION_0_1);
-                wrapper.getHttpClientInputs().setContentType(APPLICATION_JSON.getMimeType());
-                break;
             case GET_DESTINATION_CLUSTER_REFERENCE:
+            case GET_CLUSTER_INFO:
                 wrapper.getHttpClientInputs().setHeaders(X_MEMCACHEKV_STORE_CLIENT_SPECIFICATION_VERSION_0_1);
                 wrapper.getHttpClientInputs().setContentType(APPLICATION_JSON.getMimeType());
                 break;

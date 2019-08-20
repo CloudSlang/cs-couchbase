@@ -27,6 +27,7 @@ public enum ApiUriSuffix {
     ADD_NODE("/addNode"),
     AUTO_FAILOVER("/autoFailover"),
     DEFAULT("/default"),
+    DO_FLUSH("/doFlush"),
     DO_JOIN_CLUSTER("/doJoinCluster"),
     EJECT_NODE_ENTRY("/ejectNodeentry"),
     SELF("/self"),

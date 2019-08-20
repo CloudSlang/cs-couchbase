@@ -32,8 +32,7 @@ public enum ClusterUri {
     private static final Map<String, String> CLUSTER_URI_MAP = new HashMap<>();
 
     static {
-        stream(values())
-                .forEach(clusterUri -> CLUSTER_URI_MAP.put(clusterUri.getKey(), clusterUri.getValue()));
+        stream(values()).forEach(entry -> CLUSTER_URI_MAP.put(entry.getKey(), entry.getValue()));
     }
 
     ClusterUri(String key, String value) {
@@ -41,7 +40,6 @@ public enum ClusterUri {
         this.value = value;
     }
 
-    @SuppressWarnings("ConstantConditions")
     public static String getValue(String input) {
         return Optional
                 .ofNullable(CLUSTER_URI_MAP.get(input))

@@ -47,8 +47,7 @@ public enum SuffixUri {
     private static final Map<String, String> SUFFIX_URI_MAP = new HashMap<>();
 
     static {
-        stream(values())
-                .forEach(suffixUri -> SUFFIX_URI_MAP.put(suffixUri.getKey(), suffixUri.getSuffixUriValue()));
+        stream(values()).forEach(entry -> SUFFIX_URI_MAP.put(entry.getKey(), entry.getSuffixUriValue()));
     }
 
     SuffixUri(String key, String value) {

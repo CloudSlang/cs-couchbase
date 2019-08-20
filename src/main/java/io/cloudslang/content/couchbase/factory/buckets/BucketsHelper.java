@@ -28,7 +28,9 @@ import io.cloudslang.content.couchbase.entities.inputs.InputsWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
+import static io.cloudslang.content.couchbase.entities.constants.Constants.ErrorMessages.INPUTS_COMBINATION_ERROR_MESSAGE;
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Miscellaneous.AMPERSAND;
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Miscellaneous.EQUAL;
 import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.BUCKET_TYPE;
@@ -41,11 +43,11 @@ import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketIn
 import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.REPLICA_NUMBER;
 import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.SASL_PASSWORD;
 import static io.cloudslang.content.couchbase.entities.constants.Inputs.BucketInputs.THREADS_NUMBER;
+import static io.cloudslang.content.couchbase.entities.couchbase.AuthType.SASL;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.getPayloadString;
 import static io.cloudslang.content.couchbase.utils.InputsUtil.setOptionalMapEntry;
-import static io.cloudslang.content.couchbase.validators.Validators.validateAuthType;
-import static io.cloudslang.content.httpclient.HttpClientInputs.AUTH_TYPE;
-import static io.cloudslang.content.httpclient.HttpClientInputs.PROXY_PORT;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.AUTH_TYPE;
+import static io.cloudslang.content.httpclient.entities.HttpClientInputs.PROXY_PORT;
 import static java.lang.String.valueOf;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
@@ -57,10 +59,10 @@ public class BucketsHelper {
     private static final String NAME = "name";
 
     public String getCreateBucketPayload(InputsWrapper wrapper) {
-        return getPayloadString(getPayloadMap(wrapper), EQUAL, AMPERSAND, true);
+        return getPayloadString(buildPayloadMap(wrapper), EQUAL, AMPERSAND, true);
     }
 
-    private Map<String, String> getPayloadMap(InputsWrapper wrapper) {
+    private Map<String, String> buildPayloadMap(InputsWrapper wrapper) {
         Map<String, String> payloadMap = new HashMap<>();
 
         setOptionalMapEntry(payloadMap, PROXY_PORT, valueOf(wrapper.getBucketInputs().getProxyPort()),
@@ -68,7 +70,14 @@ public class BucketsHelper {
         setOptionalMapEntry(payloadMap, SASL_PASSWORD, wrapper.getBucketInputs().getSaslPassword(),
                 isNotBlank(wrapper.getBucketInputs().getSaslPassword()));
 
-        validateAuthType(payloadMap, wrapper.getBucketInputs().getAuthType());
+        String authType = wrapper.getBucketInputs().getAuthType();
+
+        Optional
+                .of(authType)
+                .filter(f -> SASL.getValue().equals(authType) && !payloadMap.containsKey(SASL_PASSWORD))
+                .ifPresent(err -> {
+                    throw new RuntimeException(INPUTS_COMBINATION_ERROR_MESSAGE);
+                });
 
         payloadMap.put(AUTH_TYPE, wrapper.getBucketInputs().getAuthType());
         payloadMap.put(BUCKET_TYPE, wrapper.getBucketInputs().getBucketType());

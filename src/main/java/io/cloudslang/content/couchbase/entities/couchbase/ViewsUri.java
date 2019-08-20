@@ -44,8 +44,7 @@ public enum ViewsUri {
     private static final Map<String, String> VIEWS_URI_MAP = new HashMap<>();
 
     static {
-        stream(values())
-                .forEach(viewsUri -> VIEWS_URI_MAP.put(viewsUri.getKey(), viewsUri.getViewsUriValue()));
+        stream(values()).forEach(entry -> VIEWS_URI_MAP.put(entry.getKey(), entry.getValue()));
     }
 
     ViewsUri(String key, String value) {
@@ -63,7 +62,7 @@ public enum ViewsUri {
         return key;
     }
 
-    private String getViewsUriValue() {
+    private String getValue() {
         return value;
     }
 }

@@ -29,10 +29,13 @@ import io.cloudslang.content.couchbase.entities.inputs.ClusterInputs;
 import io.cloudslang.content.couchbase.entities.inputs.CommonInputs;
 import io.cloudslang.content.couchbase.entities.inputs.InputsWrapper;
 import io.cloudslang.content.couchbase.entities.inputs.NodeInputs;
-import io.cloudslang.content.httpclient.HttpClientInputs;
+import io.cloudslang.content.httpclient.entities.HttpClientInputs;
+
+import java.util.Optional;
 
 import static io.cloudslang.content.couchbase.entities.constants.Constants.ErrorMessages.UNKNOWN_BUILDER_TYPE;
 import static io.cloudslang.content.couchbase.entities.constants.Constants.Values.INIT_INDEX;
+
 
 /**
  * Created by Mihai Tusa
@@ -50,20 +53,25 @@ public class InputsWrapperBuilder {
                 .withCommonInputs(commonInputs)
                 .build();
 
-        if (builders.length > INIT_INDEX) {
-            for (T builder : builders) {
-                if (builder instanceof BucketInputs) {
-                    wrapper.setBucketInputs((BucketInputs) builder);
-                } else if (builder instanceof ClusterInputs) {
-                    wrapper.setClusterInputs((ClusterInputs) builder);
-                } else if (builder instanceof NodeInputs) {
-                    wrapper.setNodeInputs((NodeInputs) builder);
-                } else {
-                    throw new RuntimeException(UNKNOWN_BUILDER_TYPE);
-                }
-            }
-        }
+        Optional
+                .ofNullable(builders)
+                .filter(f -> builders.length > INIT_INDEX)
+                .ifPresent(set -> setOnlyValidBuilderTypes(wrapper, builders));
 
         return wrapper;
+    }
+
+    private static <T> void setOnlyValidBuilderTypes(InputsWrapper wrapper, T[] builders) {
+        for (T builder : builders) {
+            if (builder instanceof BucketInputs) {
+                wrapper.setBucketInputs((BucketInputs) builder);
+            } else if (builder instanceof ClusterInputs) {
+                wrapper.setClusterInputs((ClusterInputs) builder);
+            } else if (builder instanceof NodeInputs) {
+                wrapper.setNodeInputs((NodeInputs) builder);
+            } else {
+                throw new RuntimeException(UNKNOWN_BUILDER_TYPE);
+            }
+        }
     }
 }

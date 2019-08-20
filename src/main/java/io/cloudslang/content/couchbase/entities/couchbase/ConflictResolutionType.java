@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static io.cloudslang.content.couchbase.utils.InputsUtil.getEnumValues;
+import static io.cloudslang.content.couchbase.utils.InputsUtil.buildErrorMessage;
 import static java.lang.String.format;
 import static java.util.Arrays.stream;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -44,8 +44,7 @@ public enum ConflictResolutionType {
     private static final Map<String, String> CONFLICT_RESOLUTION_TYPE_MAP = new HashMap<>();
 
     static {
-        stream(values())
-                .forEach(bucketType -> CONFLICT_RESOLUTION_TYPE_MAP.put(bucketType.name().toLowerCase(), bucketType.getValue()));
+        stream(values()).forEach(entry -> CONFLICT_RESOLUTION_TYPE_MAP.put(entry.name().toLowerCase(), entry.getValue()));
     }
 
     private final String value;
@@ -63,6 +62,6 @@ public enum ConflictResolutionType {
                 Optional
                         .ofNullable(CONFLICT_RESOLUTION_TYPE_MAP.get(input))
                         .orElseThrow(() -> new RuntimeException(format("Invalid Couchbase conflict resolution type value: '%s'. Valid values: '%s'.",
-                                input, getEnumValues(ConflictResolutionType.class))));
+                                input, buildErrorMessage(ConflictResolutionType.class))));
     }
 }

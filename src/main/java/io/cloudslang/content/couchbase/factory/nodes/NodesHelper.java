@@ -45,14 +45,14 @@ public class NodesHelper {
     private static final String RECOVERY_TYPE = "recoveryType";
 
     public String getFailOverNodePayloadString(InputsWrapper wrapper) {
-        return getPayloadString(getPayloadMap(wrapper), EQUAL, EMPTY, false);
+        return getPayloadString(buildPayloadMap(wrapper), EQUAL, EMPTY, false);
     }
 
     public String getRecoveryTypePayloadString(InputsWrapper wrapper) {
-        return getPayloadString(getPayloadMap(wrapper), EQUAL, AMPERSAND, true);
+        return getPayloadString(buildPayloadMap(wrapper), EQUAL, AMPERSAND, true);
     }
 
-    private Map<String, String> getPayloadMap(InputsWrapper wrapper) {
+    private Map<String, String> buildPayloadMap(InputsWrapper wrapper) {
         Map<String, String> payloadMap = new HashMap<>();
         payloadMap.put(OTP_NODE, wrapper.getNodeInputs().getInternalNodeIpAddress());
 
