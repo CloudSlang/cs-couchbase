@@ -1,12 +1,3 @@
-<a href="http://cloudslang.io/">
-    <img src="https://camo.githubusercontent.com/ece898cfb3a9cc55353e7ab5d9014cc314af0234/687474703a2f2f692e696d6775722e636f6d2f696849353630562e706e67" alt="CloudSlang logo" title="CloudSlang" align="left" height="60"/>
-</a>
-
-<a href="https://developer.couchbase.com/documentation/server/current/introduction/intro.html/">
-    <img src="https://cdn.worldvectorlogo.com/logos/couchbase.svg" alt="Couchbase logo" title="Couchbase" align="right" height="60"/>
-</a>
-
-
 This repository contains ready-made CloudSlang @Actions, flows, operations and tests for the Couchbase integration.
 
 | Travis CI| Maven Central | Rating | Test coverage | Dependencies | 
